@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Contraseña</title>
+    <script src="cambiar contraseña.js"></script>
+    <link rel="stylesheet" href="Proyecto.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        <form class="form" name="formCam">
+            <!-- Contenido del formulario de cambiar contraseña -->
+            <div class="form-title">
+                <h2>Cambiar contraseña</h2>
+            </div>
+            <label for="username">
+                <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
+            </label>
+            <label for="passwd">
+                <input type="password" placeholder="Contraseña actual" name="passwd" required>
+            </label>
+            <label for="newpasswd">
+                <input type="password" placeholder="Nueva contraseña" name="newpasswd" pattern="[A-Za-z0-9!?-]{4,8}" required>
+            </label>
+            <label for="confirmnewpasswd">
+                <input type="password" placeholder="Confirmar nueva contraseña" name="confirmnewpasswd" pattern="[A-Za-z0-9!?-]{4,8}" required>
+            </label>
+
+            <button type="button" id="btn">Guardar</button>
+            <a href="formulario_principal.html">Iniciar Sesión</a>
+        </form>
+    </div>
+    <script src="cambiar_contraseña.js"></script>
+</body>
+</html>
