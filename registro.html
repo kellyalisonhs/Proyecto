@@ -17,7 +17,7 @@
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formReg">
+        <form class="form" id="registro" onsubmit="event.preventDefault(); registrar(this);">
             <!-- Contenido del formulario de registro -->
             <div class="form-title">
                 <h2>Registro</h2>
@@ -35,33 +35,28 @@
                     <option value="admin">Admin</option>
                 </select>
             </label>
-            
             <label for="password">
                 <input type="password" placeholder="Contraseña" name="password" required>
             </label>
-
-            <label for="password">
+            <label for="confirmPassword">
                 <input type="password" placeholder="Confirmar contraseña" name="confirmPassword" required>
             </label>
-            <label for="question">
-                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+            <label for="recoveryQuestion">
+                <input type="text" placeholder="Pregunta de recuperación" name="recoveryQuestion" required>
             </label>
-            <label for="response">
-                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
+            <label for="answer">
+                <input type="text" placeholder="Respuesta" name="answer" required>
             </label>
-            <button type="button" id="btn">Registrarse</button>
+            <button type="submit">Registrarse</button>
         </form>
-
-        <script src="registrar_usuario.js"></script>
-
         <!-- Enlace para regresar al formulario de inicio de sesión -->
-        <a class="return-link" href="login.html">Volver a Inicio de Sesión</a>
-        
+        <a class="return-link" href="formulario_principal.html">Volver a Inicio de Sesión</a>    
         <!-- <form id="ingreso" onsubmit="event.preventDefault(); ingresar(this);">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Ingresar</button>
         </form>  -->
     </div>
+    <script type="module" src="registrar_usuario.mjs"></script>
 </body>
 </html>

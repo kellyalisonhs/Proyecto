@@ -45,9 +45,31 @@ function registrar(formulario) {
         formulario.reset();
 
         // Guardar los datos en un archivo JSON
-        fs.writeFile('usuarios.json', JSON.stringify(usuarios), (err) => {
+        /* fs.writeFile('usuarios.json', JSON.stringify(usuarios), (err) => {
             if (err) throw err;
             console.log('Los datos se han guardado en el archivo usuarios.json.');
-        });
+        }); */
+
+        // Guardar los datos en localStorage
+        //localStorage.setItem('usuarios', JSON.stringify(usuarios));
+
+        // Enviar datos al servidor (puedes usar fetch o AJAX)
+        /* fetch('/guardar-usuario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(nuevoUsuario),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Usuario registrado con éxito', data);
+            formulario.reset();
+        })
+        .catch(error => {
+            console.error('Error al registrar el usuario', error);
+        }); */
     }
 }
+
+export { usuarios, registrar };
