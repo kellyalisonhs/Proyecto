@@ -1,0 +1,42 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0faff; /* Color de fondo de respaldo si la imagen no se carga */
+    background-image: url('https://dbdzm869oupei.cloudfront.net/img/photomural/preview/70518.png'); /* Ruta de tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+}
+  
+.wrapper {
+    position: relative;
+    max-width: 470px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 20px 30px 120px;
+    background: rgba(64, 112, 244, 0.7); /* Color de fondo con opacidad */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+  
+.Titulo {
+    font-size: 48px; /* Tamaño de fuente más grande */
+    text-align: center; 
+    color: #ff69b4; 
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+  
+.usuarios-box {
+    background-color: rgba(235, 230, 233, 1); 
+    border-radius: 8px;
+    padding: 20px;
+}  

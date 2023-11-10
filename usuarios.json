@@ -1,0 +1,25 @@
+[{
+    "user": "Kelly",
+    "email": "kelly@dominio.mx",
+    "password": "92c4cf9df4c01b73f7e757e78ae60841",
+    "type": "admin",
+    "question": "Color favorito",
+    "answer": "bda9643ac6601722a28f238714274da4"
+ },
+ {
+    "user": "Magali",
+    "email": "magali@dominio.mx",
+    "password": "d4177dc752cddc204b22ec5798c4400e",
+    "type": "admin",
+    "question": "Lugar favorito",
+    "answer": "9f27410725ab8cc8854a2769c7a516b8" 
+  },
+  {
+    "user": "Yaretzi",
+    "email": "yaretzi@dominio.mx",
+    "password": "3b24fa7e14555a1912e5bc2198f8e075",
+    "type": "admin",
+    "question": "Materia favorita",
+    "answer": "48d6215903dff56238e52e8891380c8f" 
+  }
+ ]
