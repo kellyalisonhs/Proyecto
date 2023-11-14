@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="src/public/css/Proyecto.css">
+    <link rel="stylesheet" href="Proyecto.css">
     <style>
         /* Estilos para el enlace de "Volver a Inicio de Sesión" */
         .return-link {
@@ -17,7 +17,8 @@
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formReg">
+        <form class="form" id="registro" onsubmit="event.preventDefault(); registrar(this);">
+            <!-- Contenido del formulario de registro -->
             <div class="form-title">
                 <h2>Registro</h2>
             </div>
@@ -37,34 +38,25 @@
             <label for="password">
                 <input type="password" placeholder="Contraseña" name="password" required>
             </label>
-
-            <label for="password">
+            <label for="confirmPassword">
                 <input type="password" placeholder="Confirmar contraseña" name="confirmPassword" required>
             </label>
-            <label for="question">
-                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+            <label for="recoveryQuestion">
+                <input type="text" placeholder="Pregunta de recuperación" name="recoveryQuestion" required>
             </label>
-            <label for="response">
-                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
+            <label for="answer">
+                <input type="text" placeholder="Respuesta" name="answer" required>
             </label>
-            <button type="button" id="btn" onclick="registrarUsuario()">Registrarse</button>
+            <button type="submit">Registrarse</button>
         </form>
-
-        <script src="src/public/js/registrar_usuario.js"></script>
-
-        <a class="return-link" href="src/public/html/login.html">Volver a Inicio de Sesión</a>
-
-<<<<<<< HEAD
-=======
         <!-- Enlace para regresar al formulario de inicio de sesión -->
-        <a class="return-link" href="formulario_principal.html">Volver a Inicio de Sesión</a>
-        
->>>>>>> 15dfb293d1c07c969d3b555cb3af94672eec2462
+        <a class="return-link" href="formulario_principal.html">Volver a Inicio de Sesión</a>    
         <!-- <form id="ingreso" onsubmit="event.preventDefault(); ingresar(this);">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Ingresar</button>
-        </form> -->
+        </form>  -->
     </div>
+    <script type="module" src="registrar_usuario.mjs"></script>
 </body>
 </html>
