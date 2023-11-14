@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
-    <link rel="stylesheet" href="Proyecto.css">
+    <link rel="stylesheet" href="src/public/css/Proyecto.css">
     <style>
         /* Estilos para el enlace de "Volver a Inicio de Sesión" */
         .return-link {
@@ -18,7 +18,6 @@
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
         <form class="form" name="formReg">
-            <!-- Contenido del formulario de registro -->
             <div class="form-title">
                 <h2>Registro</h2>
             </div>
@@ -35,7 +34,6 @@
                     <option value="admin">Admin</option>
                 </select>
             </label>
-            
             <label for="password">
                 <input type="password" placeholder="Contraseña" name="password" required>
             </label>
@@ -49,19 +47,18 @@
             <label for="response">
                 <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
             </label>
-            <button type="button" id="btn">Registrarse</button>
+            <button type="button" id="btn" onclick="registrarUsuario()">Registrarse</button>
         </form>
 
-        <script src="registrar_usuario.js"></script>
+        <script src="src/public/js/registrar_usuario.js"></script>
 
-        <!-- Enlace para regresar al formulario de inicio de sesión -->
-        <a class="return-link" href="login.html">Volver a Inicio de Sesión</a>
-        
+        <a class="return-link" href="src/public/html/login.html">Volver a Inicio de Sesión</a>
+
         <!-- <form id="ingreso" onsubmit="event.preventDefault(); ingresar(this);">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Contraseña" required>
             <button type="submit">Ingresar</button>
-        </form>  -->
+        </form> -->
     </div>
 </body>
 </html>
