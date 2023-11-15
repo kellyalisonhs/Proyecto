@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="src/public/css/Proyecto.css">
+    <style>
+        /* Estilos para el enlace de "Volver a Inicio de Sesión" */
+        .return-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        <form class="form" name="formReg">
+            <div class="form-title">
+                <h2>Registro</h2>
+            </div>
+            <label for="username">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+            </label>
+            <label for="Correo electronico">
+                <input type="email" name="correo_electronico" placeholder="Correo electrónico" required>
+            </label>
+            <label for="usertype">
+                <select id="tipoUsuario" name="usertype" required>
+                    <option value="">Tipo de usuario</option>
+                    <option value="operativo">Operativo</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </label>
+            <label for="password">
+                <input type="password" placeholder="Contraseña" name="password" required>
+            </label>
+
+            <label for="password">
+                <input type="password" placeholder="Confirmar contraseña" name="confirmPassword" required>
+            </label>
+            <label for="question">
+                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+            </label>
+            <label for="response">
+                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
+            </label>
+            <button type="button" id="btn" onclick="registrarUsuario()">Registrarse</button>
+        </form>
+
+        <script src="src/public/js/registrar_usuario.js"></script>
+
+        <a class="return-link" href="login">Volver a Inicio de Sesión</a>
+
+        <!-- <form id="ingreso" onsubmit="event.preventDefault(); ingresar(this);">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Contraseña" required>
+            <button type="submit">Ingresar</button>
+        </form> -->
+        
+    </div>
+</body>
+</html>

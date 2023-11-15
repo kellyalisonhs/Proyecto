@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de usuarios registrados</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="src/public/css/styleList.css">
+</head>
+<body>    
+    <div id="wrapper">
+        <h2 id="titulo">Lista de usuarios registrados</h2>
+        <div class="usuarios-box">
+            <table id="lista">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>        
+                        <th>Correo electronico</th>        
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div> 
+
+    <script src="../js/lib/md5.min.js"> </script>
+    <script src="../js/tabla.js"></script>
+    <script>
+        getAllUsers();
+    </script>
+
+    <a class="return-link" href="login">Volver al inicio de sesión</a>
+
+</body>
+</html>

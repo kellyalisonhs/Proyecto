@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="src/public/js/olvid_contraseña.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olvidaste tu Contraseña</title>
+    <link rel="stylesheet" href="src/public/css/Proyecto.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        <form class="form" name="formConC" id="olvide_contraseña">
+            <div class="form-title">
+                <h2>¿Olvidaste tu contraseña?</h2>
+            </div>
+            <label for="email">
+                <input type="email" placeholder="Correo electrónico" name="email" id="email" pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$" required>
+            </label>
+            <div class="link-container">
+                <button type="button" id="btnBuscar" onclick="buscarCuenta()">Buscar</button>
+            </div>
+        </form>
+        <div class="link-container">
+            <a href="login">Volver a Iniciar Sesión</a>
+            <a href = "recovery-passwd">Recuperar Contraseña</a>
+        </div>
+    </div>
+    <script src="src/public/js/olvid_contraseña.js"></script>
+</body>
+</html>

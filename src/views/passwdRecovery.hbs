@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <script src="src/public/js/recuperar_contraseña.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" href="src/public/css/Proyecto.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        <form class="form" name="formCon">
+            <div class="form-title">
+                <h2>Recuperar contraseña</h2>
+            </div>
+            <label for="question">
+                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+            </label>
+            <label for="response">
+                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
+            </label>
+            <button type="button" id="btn" onclick="recuperarContrasena()">Enviar</button>
+            <a href="change-passwd">Cambiar Contraseña</a>
+        </form>
+    </div>
+    <script src="src/public/js/recuperar_contraseña.js"></script>
+</body>
+</html>
