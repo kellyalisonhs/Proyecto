@@ -8,4 +8,3 @@ export const conn = createPool({
     port: 3306,
     database: 'users'
 });
-
