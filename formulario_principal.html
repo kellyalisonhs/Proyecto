@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <script src="olvide_contraseñas.js"></script>
+    <script src="inicio_sesion.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="Proyecto.css">
+    <style>
+        /* Estilos para los enlaces */
+        .link-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .link-container a {
+            text-decoration: none;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        
+        .link-container a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        
+        <!-- Contenido del formulario de inicio de sesión -->
+        <div class="form">
+            <div class="form-title">
+                <h2>Inicio de Sesión</h2>
+            </div>
+            <label for="username">
+                <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
+            </label>
+            <label for="passwd">
+                <input type="password" placeholder="Contraseña" name="passwd" pattern="[A-Za-z0-9!?-]{4,8}">
+            </label>
+            <button type="button" id="btn" onclick="location.href='tabla.html';">Ingresar</button>
+        </div>
+        
+        <!-- Estilización de los enlaces a otros formularios -->
+        <div class="link-container">
+            <a href="olvidaste_contraseña.html">¿Olvidaste tu contraseña?</a>
+            <a href="registro.html">Registrarse</a>
+        </div>
+    </div>
+</body>
+</html>
+
