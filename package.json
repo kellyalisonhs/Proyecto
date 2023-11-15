@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "formulario_principal.html",
-  "type" : "module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "app": "nodemon src/index.js"
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "hbs": "^4.2.0",
     "mysql2": "^3.6.3",
     "nodemon": "^3.0.1"
   }
