@@ -16,6 +16,7 @@ export const getAllUsers = async()=> {
             id:row.id,
             name:row.name_u,
             email:row.email_u
+            
         }
         userObjs.push(obj);                      
       })    
