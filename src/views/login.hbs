@@ -3,10 +3,11 @@
 
 <head>
     <script src="src/public/js/olvide_contraseñas.js"></script>
+     <script src="src/public/js/inicio_sesion.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
-    <link rel="stylesheet" href="src/public/css/Proyecto.css">
+    <link rel="stylesheet" href="css/Proyecto.css">
     <style>
         /* Estilos para los enlaces */
         .link-container {
@@ -33,25 +34,26 @@
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        
-        <div class="form">
-            <div class="form-title">
-                <h2>Inicio de Sesión</h2>
+        <form class="form" name="formInicio"></form>
+            <div class="form">
+                <div class="form-title">
+                    <h2>Inicio de Sesión</h2>
+                </div>
+                <label for="username">
+                    <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
+                </label>
+                <label for="passwd">
+                    <input type="password" placeholder="Contraseña" name="passwd" pattern="[A-Za-z0-9!?-]{4,8}">
+                </label>
+                <button type="button" id="btn" onclick="location.href='users-list';">Ingresar</button>
             </div>
-            <label for="username">
-                <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
-            </label>
-            <label for="passwd">
-                <input type="password" placeholder="Contraseña" name="passwd" pattern="[A-Za-z0-9!?-]{4,8}">
-            </label>
-            <button type="button" id="btn" onclick="location.href='users-list';">Ingresar</button>
-        </div>
-        
+        </form>
         <div class="link-container">
             <a href="forgot-passwd">¿Olvidaste tu contraseña?</a>
             <a href="register">Registrarse</a>
         </div>
     </div>
+     <script src="src/public/js/inicio_sesion.js"></script>
 </body>
 </html>
 

@@ -13,9 +13,9 @@ function ingresar(formulario) {
             alert("Usuario autenticado con éxito");
             formulario.reset();
             return true;
+        }else{
+            alert("Usuario o contraseña incorrecta");
+            return false;
         }
     }
-
-    alert("Usuario o contraseña incorrecta");
-    return false;
 }
