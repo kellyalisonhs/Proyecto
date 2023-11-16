@@ -6,7 +6,8 @@ export const getAllUsers = (req, res)=>{
    /* Consumo con async y await */
    (async () => {      
       let users = await userService.getAllUsers(); 
-      res.render("users",{"list":users});      
+      res.render("users",{"title":"Lista de usuarios registrados",
+                           "list":users});    
     })();      
 };
 
@@ -34,7 +35,7 @@ export const getChangePasswd = (req, res) => {
    res.render("changePasswd.hbs")
 }
 
-/* export const login = (req, res)=>{
+export const login = (req, res)=>{
    let {email, passwd} = req.body;
    
    console.log(email+' '+passwd);
@@ -45,7 +46,7 @@ export const getChangePasswd = (req, res) => {
          res.send("Usuario registrado");
        })();            
    }
-} */
+}
 
 /* controlador para registrar usuario */
 export const registerUser = async (req, res) => {
@@ -67,4 +68,17 @@ export const registerUser = async (req, res) => {
    } catch (error) {
       res.status(400).send(`Error al registrar usuario: ${error.message}`);
    }
+};
+
+/* controlador para inicio de sesión */
+export const loginUser = async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const user = await userService.loginUser(username, password);
+    // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
+    res.redirect("/users-list");
+  } catch (error) {
+    res.status(400).send(`Error al iniciar sesión: ${error.message}`);
+  }
 };

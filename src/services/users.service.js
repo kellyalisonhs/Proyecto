@@ -23,15 +23,15 @@ export const getAllUsers = async()=> {
    return userObjs;               
 }
 
-export const valAuth = async(username, password)=> {
-   let user = await userModel.getUserByUsername(username);
-   let hash = createHash("md5").update(password).digest("hex");
+export const valAuth = async(email, passwd)=> {
+   let user = await userModel.getUserByEmail(email);
+   let hash = createHash("md5").update(passwd).digest("hex");
 
    console.log(user[0].passwd_u);
    console.log(hash);
    
    if (user) {
-      if(user[0].name_u === username && user[0].passwd_u === hash)
+      if(user[0].email_u === email && user[0].passwd_u === hash)
          return true;      
    }     
    return false;
@@ -70,3 +70,19 @@ export const registerUser = async (userData) => {
    const result = await userModel.createUser(userData);
    return result;
 };
+
+/* servicio para incio de sesión */
+export const loginUser = async (username, password) => {
+   // Validaciones previas al inicio de sesión en la base de datos
+   if (!username || !password) {
+     throw new Error("Todos los campos son obligatorios.");
+   }
+ 
+   const user = await userModel.getUserByUsernameAndPassword(username, password);
+ 
+   if (user.length === 0) {
+     throw new Error("Usuario o contraseña incorrectos.");
+   }
+ 
+   return user[0];
+ };

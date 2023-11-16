@@ -34,3 +34,11 @@ export async function createUser(user) {
     throw error; // Propaga el error para que sea manejado en el servicio
   }
 }
+
+/* modelo para inicio de sesión */
+// se obtiene el nombre de usuario y contraseña
+export async function getUserByUsernameAndPassword(username, password) {
+  const strSql = 'SELECT * FROM user WHERE name_u = ? AND passwd_u = ?';
+  const [result] = await conn.query(strSql, [username, password]);
+  return result;
+}
