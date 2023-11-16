@@ -1,10 +1,9 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-  
+
 body {
     min-height: 100vh;
     display: flex;
@@ -15,7 +14,7 @@ body {
     background-size: cover;
     background-position: center;
 }
-  
+
 .wrapper {
     position: relative;
     max-width: 470px;
@@ -26,17 +25,19 @@ body {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
-  
+
 .Titulo {
     font-size: 48px; /* Tamaño de fuente más grande */
-    text-align: center; 
-    color: #ff69b4; 
+    text-align: center;
+    color: #ff69b4;
     font-weight: 800;
     margin-bottom: 20px;
 }
-  
+
 .usuarios-box {
-    background-color: rgba(235, 230, 233, 1); 
+    background-color: white; /* Cambiado a blanco para el cuadro de usuarios */
     border-radius: 8px;
     padding: 20px;
-}  
+    margin: 20px; /* Añadido margen para separación */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Añadida sombra para resaltar */
+}
