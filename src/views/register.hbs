@@ -17,17 +17,17 @@
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formReg">
+        <form class="form" name="formReg" action="/register" method="POST"> <!-- Se añade action y method -->
             <div class="form-title">
                 <h2>Registro</h2>
             </div>
             <label for="username">
-                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
             </label>
-            <label for="Correo electronico">
-                <input type="email" name="correo_electronico" placeholder="Correo electrónico" required>
+            <label for="correo_electronico">
+                <input type="email" id="correo_electronico" name="correo_electronico" placeholder="Correo electrónico" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Formato de correo no válido. Debe ser similar a nombre@dominio.com" required>
             </label>
-            <label for="usertype">
+            <label for="tipoUsuario">
                 <select id="tipoUsuario" name="usertype" required>
                     <option value="">Tipo de usuario</option>
                     <option value="operativo">Operativo</option>
@@ -35,31 +35,21 @@
                 </select>
             </label>
             <label for="password">
-                <input type="password" placeholder="Contraseña" name="password" required>
+                <input type="password" id="password" placeholder="Contraseña" name="password" required>
             </label>
-
-            <label for="password">
-                <input type="password" placeholder="Confirmar contraseña" name="confirmPassword" required>
+            <label for="confirmPassword">
+                <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" name="confirmPassword" required>
             </label>
             <label for="question">
-                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+                <input type="text" id="question" placeholder="Pregunta de recuperación" name="question" required>
             </label>
-            <label for="response">
-                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
+            <label for="answer">
+                <input type="text" id="answer" placeholder="Respuesta" name="answer" required>
             </label>
-            <button type="button" id="btn" onclick="registrarUsuario()">Registrarse</button>
+            
+            <button type="submit">Registrarse</button>
         </form>
-
-        <script src="src/public/js/registrar_usuario.js"></script>
-
         <a class="return-link" href="login">Volver a Inicio de Sesión</a>
-
-        <!-- <form id="ingreso" onsubmit="event.preventDefault(); ingresar(this);">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Contraseña" required>
-            <button type="submit">Ingresar</button>
-        </form> -->
-        
     </div>
 </body>
 </html>

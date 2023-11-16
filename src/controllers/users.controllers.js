@@ -46,3 +46,25 @@ export const getChangePasswd = (req, res) => {
        })();            
    }
 } */
+
+/* controlador para registrar usuario */
+export const registerUser = async (req, res) => {
+   const { username, correo_electronico, usertype, password, confirmPassword, question, answer } = req.body;
+
+   try {
+      // llama a la función del servicio para registrar al usuario
+      await userService.registerUser({
+         username,
+         correo_electronico,
+         usertype,
+         password,
+         confirmPassword,
+         question,
+         answer
+      });
+
+      res.send("Usuario registrado exitosamente");
+   } catch (error) {
+      res.status(400).send(`Error al registrar usuario: ${error.message}`);
+   }
+};

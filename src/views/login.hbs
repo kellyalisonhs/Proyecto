@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <script src="src/public/js/olvide_contraseñas.js"></script>
-     <script src="src/public/js/inicio_sesion.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión</title>
@@ -30,22 +27,21 @@
         }
     </style>
 </head>
-
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formInicio"></form>
+        <form class="form" name="formLogin" action="/login" method="POST">
             <div class="form">
                 <div class="form-title">
                     <h2>Inicio de Sesión</h2>
                 </div>
                 <label for="username">
-                    <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
+                    <input type="text" id="username" name="username" placeholder="Usuario" required>
                 </label>
-                <label for="passwd">
-                    <input type="password" placeholder="Contraseña" name="passwd" pattern="[A-Za-z0-9!?-]{4,8}">
+                <label for="password">
+                    <input type="password" id="password" placeholder="Contraseña" name="password" required>
                 </label>
-                <button type="button" id="btn" onclick="location.href='users-list';">Ingresar</button>
+                <button type="submit">Ingresar</button>
             </div>
         </form>
         <div class="link-container">
@@ -53,7 +49,5 @@
             <a href="register">Registrarse</a>
         </div>
     </div>
-     <script src="src/public/js/inicio_sesion.js"></script>
 </body>
 </html>
-

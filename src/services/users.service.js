@@ -9,7 +9,6 @@ export const getAllUsers = async()=> {
     *  2. Se genera un nuevo objeto que no contiene la contraseña
     *  3. Se añade a un nuevo array que se retorna al controller como promesa
     */
-   
    let users = await userModel.getAllUsers();
    if (users) {      
         users.forEach(row=>{
@@ -24,17 +23,50 @@ export const getAllUsers = async()=> {
    return userObjs;               
 }
 
-export const valAuth = async(email, passwd)=> {
-   let user = await userModel.getUserByEmail(email);
-   let hash = createHash("md5").update(passwd).digest("hex");
+export const valAuth = async(username, password)=> {
+   let user = await userModel.getUserByUsername(username);
+   let hash = createHash("md5").update(password).digest("hex");
 
    console.log(user[0].passwd_u);
    console.log(hash);
    
    if (user) {
-      if(user[0].email_u === email && user[0].passwd_u === hash)
+      if(user[0].name_u === username && user[0].passwd_u === hash)
          return true;      
    }     
    return false;
 }
 
+/* serivicio para registro de nuevo usuario */
+export const registerUser = async (userData) => {
+   // Validaciones previas al registro en la base de datos
+   if (
+      !userData.username ||
+      !userData.correo_electronico ||
+      !userData.usertype ||
+      !userData.password ||
+      !userData.confirmPassword ||
+      !userData.question ||
+      !userData.answer
+   ) {
+      throw new Error("Todos los campos son obligatorios.");
+   }
+
+   // this one doesnt works
+   const existingUser = await userModel.getUserByEmail(userData.email_u);
+   if (existingUser.length > 0) {
+     throw new Error("El correo electrónico ya está registrado.");
+   }
+
+   if (userData.password !== userData.confirmPassword) {
+      throw new Error("Las contraseñas no coinciden.");
+   }
+ 
+   // hash para la contraseña antes de almacenarla
+   const hashedPassword = createHash("md5").update(userData.password).digest("hex");
+   userData.password = hashedPassword;
+ 
+   // se llama a la función del modelo para crear el usuario
+   const result = await userModel.createUser(userData);
+   return result;
+};
