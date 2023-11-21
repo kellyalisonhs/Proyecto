@@ -1,13 +1,50 @@
-<h1 id="title-table">{{title}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styleList.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-<table id="lista">
-  <thead>
-    <th>nombre</th><th>correo</th>
-  </thead>  
-  </tr>
-{{#each list}}
-  <tr>      
-     <td>{{name}}</td><td>{{email}}</td> 
-  </tr>   
-{{/each}}
-</table>
+    #title {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #wrapper {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">Lista de usuarios registrados</h1>
+
+  <div id="wrapper">
+    <div class="usuarios-box">
+      <table id="lista">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Correo electrónico</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        
+        {{#each list}}
+        
+        <tr>      
+          <td>{{name}}</td>
+          <td>{{email}}</td> 
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -53,7 +53,7 @@ export const registerUser = async (userData) => {
       throw new Error("Todos los campos son obligatorios.");
    }
 
-   // this one doesnt works
+   // this one doesnt works (apparently now it does)
    const existingUser = await userModel.getUserByEmail(userData.email_u);
    if (existingUser.length > 0) {
      throw new Error("El correo electrónico ya está registrado.");
@@ -74,16 +74,41 @@ export const registerUser = async (userData) => {
 
 /* servicio para incio de sesión */
 export const loginUser = async (username, password) => {
-   // Validaciones previas al inicio de sesión en la base de datos
-   if (!username || !password) {
-     throw new Error("Todos los campos son obligatorios.");
+   try {
+      console.log('Inicio de sesión para el usuario:', username);
+
+      // validaciones previas al inicio de sesión
+      // se corrobora que los campos estén llenos
+      if (!username || !password) {
+        throw new Error("Nombre de usuario y contraseña son obligatorios.");
+      }
+  
+      // hash de la contraseña proporcionada antes de llamar al modelo
+      /* const hashedPassword = createHash('md5').update(password).digest('hex'); */
+  
+      // consulta el usuario por nombre de usuario (llamada al modelo)
+      const user = await userModel.getUserByUsername(username);
+
+      console.log('Resultado de la consulta:', user);
+  
+      // se verifica si se encontró un usuario con los datos proporcionados
+      if (!user || user.length === 0) {
+         throw new Error(`El usuario "${username}" no existe.`);
+      }
+
+      // hash de la contraseña proporcionada para comparar con la almacenada en la base de datos
+      const hashedPassword = createHash('md5').update(password).digest('hex');
+
+      // se verifica si la contraseña proporcionada coincide con la almacenada en la base de datos
+      if (user[0].passwd_u !== hashedPassword) {
+         throw new Error(`La contraseña para el usuario "${username}" es incorrecta.`);
+      }
+  
+      // autenticación exitosa, devuelve la información del usuario
+      return user[0];
+   } catch (error) {
+      // manejo de errores
+      console.error('Error en el inicio de sesión:', error);
+      throw error;
    }
- 
-   const user = await userModel.getUserByUsernameAndPassword(username, password);
- 
-   if (user.length === 0) {
-     throw new Error("Usuario o contraseña incorrectos.");
-   }
- 
-   return user[0];
- };
+};

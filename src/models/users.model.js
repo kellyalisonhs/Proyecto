@@ -1,4 +1,5 @@
 import {conn} from '../../db.js';
+import { createHash } from 'crypto';
 
 export async function getAllUsers(){
   const strSql = 'select * from user';    
@@ -18,27 +19,28 @@ export async function getUserByEmail(email){
   return result;
 }
 
+/* modelo para inicio de sesión (se recupera el nombre de usuario) */
+export async function getUserByUsername(username){  
+  const strSql = 'SELECT * FROM user WHERE name_u = ?';   
+  const [result] = await conn.query(strSql,[username]);      
+  return result;
+}
+
 /* modelo para registrar usuario */
 export async function createUser(user) {
   const { username, correo_electronico, usertype, password, question, answer } = user;
+  
+  // Hash de la contraseña proporcionada antes de almacenarla en la base de datos
+  const hashedPassword = createHash('md5').update(password).digest('hex');
+  
   const strSql = 'INSERT INTO user (name_u, email_u, type_u, passwd_u, question_u, answer_u) VALUES (?, ?, ?, ?, ?, ?)';
-  //const [result] = await conn.query(strSql, [username, email, usertype, password, question, answer]);
-  //return result;
   // para manejar errores en la consulta
   try {
     const [result] = await conn.query(strSql, [username, correo_electronico, usertype, password, question, answer]);
-    console.log(result); // Loguea el resultado de la consulta
+    console.log(result); // loguea el resultado de la consulta
     return result;
   } catch (error) {
     console.error("Error en la consulta SQL:", error);
-    throw error; // Propaga el error para que sea manejado en el servicio
+    throw error; // propaga el error para que sea manejado en el servicio
   }
-}
-
-/* modelo para inicio de sesión */
-// se obtiene el nombre de usuario y contraseña
-export async function getUserByUsernameAndPassword(username, password) {
-  const strSql = 'SELECT * FROM user WHERE name_u = ? AND passwd_u = ?';
-  const [result] = await conn.query(strSql, [username, password]);
-  return result;
 }
