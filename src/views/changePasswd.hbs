@@ -4,34 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cambiar Contraseña</title>
-    <script src="Proyecto/src/public/js/cambiar_contraseña.js"></script>
     <link rel="stylesheet" href="css/Proyecto.css">
 </head>
-
 <body>
-
-<div class="wrapper">
-    <form id="cambiarContraseñaForm">
-        <div class="form-title">
-            <h2>Cambiar contraseña</h2>
-        </div>
-        <label for="username">
-            <input type="text" placeholder="Usuario" name="username" pattern="[a-zA-Z]+" required>
-        </label>
-        <label for="passwd">
-            <input type="password" placeholder="Contraseña actual" name="passwd" required>
-        </label>
-        <label for="newpasswd">
-            <input type="password" placeholder="Nueva contraseña" name="newpasswd" pattern="[A-Za-z0-9!?-]{4,8}" required>
-        </label>
-        <label for="confirmnewpasswd">
-            <input type="password" placeholder="Confirmar nueva contraseña" name="confirmnewpasswd" pattern="[A-Za-z0-9!?-]{4,8}" required>
-        </label>
-
-        <button type="button" id="btn" onclick="cambiarContrasena()" title="Guardar los cambios a la contraseña">Guardar</button>
-        <a href="login">Iniciar Sesión</a>
-    </form>
-</div>
-
+    <div class="wrapper">
+        <h1 class="Titulo">Bienvenidos</h1>
+        <form class="form" name="formCon" action="/change-passwd" method="POST">
+            <div class="form-title">
+                <h2>Cambiar contraseña</h2>
+            </div>
+            <h3>Usuario: {{ user.name_u }}</h3>
+            <label for="newPasswd">
+                <input type="password" placeholder="Nueva contraseña" name="newPassword" pattern="[A-Za-z0-9!?-]{4,8}" required>
+            </label>
+            <label for="confirmNewPasswd">
+                <input type="password" placeholder="Confirmar nueva contraseña" name="confirmNewPassword" pattern="[A-Za-z0-9!?-]{4,8}" required>
+            </label>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
 </body>
 </html>

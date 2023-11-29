@@ -1,3 +1,4 @@
+/* users.model.js */
 import {conn} from '../../db.js';
 import { createHash } from 'crypto';
 
@@ -13,9 +14,9 @@ export async function getUserById(id){
   return result;
 }
 
-export async function getUserByEmail(email){  
+export async function getUserByEmail(correo_electronico){  
   const strSql = 'SELECT * FROM user WHERE email_u = ?';   
-  const [result] = await conn.query(strSql,[email]);      
+  const [result] = await conn.query(strSql,[correo_electronico]);      
   return result;
 }
 
@@ -43,4 +44,19 @@ export async function createUser(user) {
     console.error("Error en la consulta SQL:", error);
     throw error; // propaga el error para que sea manejado en el servicio
   }
+}
+
+/* modelo para recuperación de contraseña (se recupera la pregunta y respuesta) */
+export async function getRecoveryInfoByEmail(correo_electronico) {
+  const strSql = 'SELECT email_u, question_u, answer_u FROM user WHERE email_u = ?';
+  const [result] = await conn.query(strSql, [correo_electronico]);
+  return result[0]; // Devuelve la pregunta y respuesta del usuario
+}
+
+/* modelo para cambiar la contraseña */
+export async function updatePasswordByEmail(correo_electronico, newPassword) {
+  const hashedPassword = createHash('md5').update(newPassword).digest('hex');
+  const strSql = 'UPDATE user SET passwd_u = ? WHERE email_u = ?';
+  const [result] = await conn.query(strSql, [hashedPassword, correo_electronico]);
+  return result;
 }

@@ -1,3 +1,4 @@
+/* users.service.js */
 import * as userModel from '../models/users.model.js';
 import { createHash } from "crypto";
 
@@ -40,36 +41,47 @@ export const valAuth = async(email, passwd)=> {
 
 /* serivicio para registro de nuevo usuario */
 export const registerUser = async (userData) => {
-   // Validaciones previas al registro en la base de datos
-   if (
-      !userData.username ||
-      !userData.correo_electronico ||
-      !userData.usertype ||
-      !userData.password ||
-      !userData.confirmPassword ||
-      !userData.question ||
-      !userData.answer
-   ) {
-      throw new Error("Todos los campos son obligatorios.");
-   }
+   try {
+      // Validaciones previas al registro en la base de datos
+      if (
+         !userData.username ||
+         !userData.correo_electronico ||
+         !userData.usertype ||
+         !userData.password ||
+         !userData.confirmPassword ||
+         !userData.question ||
+         !userData.answer
+      ) {
+         throw new Error("Todos los campos son obligatorios.");
+      }
 
-   // this one doesnt works (apparently now it does)
-   const existingUser = await userModel.getUserByEmail(userData.email_u);
-   if (existingUser.length > 0) {
-     throw new Error("El correo electrónico ya está registrado.");
-   }
+      const existingUser = await userModel.getUserByEmail(userData.correo_electronico);
+      
+      console.log("Existing User:", existingUser); // Añadido para depuración
 
-   if (userData.password !== userData.confirmPassword) {
-      throw new Error("Las contraseñas no coinciden.");
+      if (existingUser.length > 0) {
+         throw new Error("El correo electrónico ya está registrado.");
+      }
+
+      if (userData.password !== userData.confirmPassword) {
+         throw new Error("Las contraseñas no coinciden.");
+      }
+
+      // Hash para la contraseña antes de almacenarla
+      const hashedPassword = createHash("md5").update(userData.password).digest("hex");
+      userData.password = hashedPassword;
+
+      // Hash para la respuesta antes de almacenarla
+      const hashedAnswer = createHash("md5").update(userData.answer).digest("hex");
+      userData.answer = hashedAnswer;
+
+      // Se llama a la función del modelo para crear el usuario
+      const result = await userModel.createUser(userData);
+      return result;
+   } catch (error) {
+      console.error("Error al registrar usuario:", error);
+      throw error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
    }
- 
-   // hash para la contraseña antes de almacenarla
-   const hashedPassword = createHash("md5").update(userData.password).digest("hex");
-   userData.password = hashedPassword;
- 
-   // se llama a la función del modelo para crear el usuario
-   const result = await userModel.createUser(userData);
-   return result;
 };
 
 /* servicio para incio de sesión */
@@ -112,3 +124,51 @@ export const loginUser = async (username, password) => {
       throw error;
    }
 };
+
+/* servicio para forgotPasswd (se busca el correo electronico)*/
+export const searchUserByEmail = async (correo_electronico) => {
+   try {
+      // Validación: Verificar que el correo electrónico no esté vacío
+      if (!correo_electronico) {
+         throw new Error("El campo de correo electrónico no puede estar vacío.");
+      }
+
+      // Validación: Verificar el formato del correo electrónico
+      const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+      if (!emailRegex.test(correo_electronico)) {
+         throw new Error("El formato del correo electrónico es inválido.");
+      }
+
+      const user = await userModel.getUserByEmail(correo_electronico);
+
+      // Validación: Verificar si el usuario existe
+      if (!user || user.length === 0) {
+         throw new Error("No se encontró ningún usuario con ese correo electrónico.");
+      }
+
+      return user[0];
+   } catch (error) {
+      console.error("Error en la búsqueda de usuario por correo electrónico:", error);
+      throw error;
+   }
+};
+
+/* servicio para obtener la pregunta de seguridad y validar la respuesta */
+export const getRecoveryInfoAndValidateAnswer = async (correo_electronico, answer) => {
+   try {
+      // se obtiene la pregunta de recuperación y la respuesta del usuario
+      const securityInfo = await userModel.getRecoveryInfoByEmail(correo_electronico);
+
+      // valida que la respuesta proporcionada coincida con la almacenada en la base de datos
+      const hashedAnswer = createHash('md5').update(answer).digest('hex');
+
+      if (securityInfo && securityInfo.answer_u === hashedAnswer) {
+         return true; // respuesta correcta
+      } else {
+         return false; // respuesta incorrecta
+      }
+   } catch (error) {
+      console.error("Error al obtener la pregunta de seguridad y validar la respuesta:", error);
+      throw error;
+   }
+} 

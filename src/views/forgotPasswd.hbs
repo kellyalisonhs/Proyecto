@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <script src="src/public/js/olvid_contraseña.js"></script>
     <meta charset="UTF-8">
@@ -8,26 +7,27 @@
     <title>Olvidaste tu Contraseña</title>
     <link rel="stylesheet" href="css/Proyecto.css">
 </head>
-
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formConC" id="olvide_contraseña">
+        <form class="form" action="/forgot-passwd" method="POST">
             <div class="form-title">
                 <h2>¿Olvidaste tu contraseña?</h2>
             </div>
-            <label for="email">
-                <input type="email" placeholder="Correo electrónico" name="email" id="email" pattern="^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$" required>
+            <label for="correo_electronico">
+                <input type="email" id="correo_electronico" name="correo_electronico" placeholder="Correo electrónico" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Formato de correo no válido. Debe ser similar a nombre@dominio.com" required>
             </label>
             <div class="link-container">
-                <button type="button" id="button" >Buscar</button>
+                <button type="submit">Buscar</button>
             </div>
+            {{!-- <!-- Sección para mostrar mensajes de error si es necesario -->
+            <div id="error-message" style="color: red;">
+                {{#if error}}
+                    {{error}}
+                {{/if}}
+            </div> --}}
         </form>
-        <div class="link-container">
             <a href="login">Volver a Iniciar Sesión</a>
-            <a href = "recovery-passwd">Recuperar Contraseña</a>
-        </div>
     </div>
-    <script src="src/public/js/olvid_contraseña.js"></script>
 </body>
 </html>

@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <script src="src/public/js/recuperar_contraseña.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar Contraseña</title>
     <link rel="stylesheet" href="css/Proyecto.css">
 </head>
-
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formCon">
+        <form class="form" name="formCon" action="/passwd-recovery" method="POST">
             <div class="form-title">
-                <h2>Recuperar contraseña</h2>
+                <h2>Respuesta de recuperación</h2>
             </div>
-            <label for="question">
-                <input type="text" placeholder="Pregunta de recuperación" name="question" pattern="[A-Za-z]+" required>
+            <!-- Mostrar la pregunta de recuperación como texto -->
+            <h3>{{ user.question_u }}</h3>
+            <!-- Campo para ingresar la respuesta -->
+            <label for="answer">
+                <input type="text" id="answer" placeholder="Respuesta" name="answer" pattern="[A-Za-z]+" required>
             </label>
-            <label for="response">
-                <input type="text" placeholder="Respuesta" name="response" pattern="[A-Za-z]+" required>
-            </label>
-            <button type="button" id="btn" onclick="recuperarContrasena()">Enviar</button>
-            <a href="change-passwd">Cambiar Contraseña</a>
+            <!-- Campo oculto para enviar el correo electrónico -->
+            <input type="hidden" name="correo_electronico" value="{{ user.email_u }}">
+            <button type="submit">Enviar</button>
         </form>
     </div>
-    <script src="src/public/js/recuperar_contraseña.js"></script>
 </body>
 </html>
