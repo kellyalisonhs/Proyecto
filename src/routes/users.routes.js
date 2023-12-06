@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer, changePassword } from "../controllers/users.controllers.js"
+import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer } from "../controllers/users.controllers.js"
 
 const router = Router();
 
@@ -17,6 +17,5 @@ router.post('/register', registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-passwd", searchUserByEmail);
 router.post("/passwd-recovery", recoveryAnswer);
-router.post("/change-passwd", changePassword);
 
 export default router;
