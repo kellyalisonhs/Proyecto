@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="css/Proyecto.css">
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        // URL de la API externa
+        const apiUrl = 'developer.marvel.com';
+
+        // Se realiza la solicitud a la API utilizando Fetch
+        fetch(apiUrl)
+            .then(response => {
+                // Verifica si la solicitud fue exitosa (código de respuesta en el rango 200-299)
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener la respuesta de la API.');
+                }
+                // Convierte la respuesta a JSON
+                return response.json();
+            })
+            .then(data => {
+                // Manipula los datos recibidos de la API
+                console.log('Datos de la API:', data);
+
+                // Puedes insertar los datos en tu página web
+                const outputDiv = document.getElementById('output');
+                outputDiv.innerHTML = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                console.error('Error al obtener datos de la API:', error.message);
+            });
+    </script>
+</body>
+</html>

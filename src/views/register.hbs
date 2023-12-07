@@ -12,12 +12,17 @@
             text-align: center;
             margin-top: 20px;
         }
+
+        /* Estilos para ocultar las listas de opciones por defecto */
+        .options-list {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <h1 class="Titulo">Bienvenidos</h1>
-        <form class="form" name="formReg" action="/register" method="POST"> <!-- Se añade action y method -->
+        <form class="form" name="formReg" action="/register" method="POST" onsubmit="return validateForm()"> <!-- Se añade onsubmit para llamar a la función de validación -->
             <div class="form-title">
                 <h2>Registro</h2>
             </div>
@@ -28,12 +33,36 @@
                 <input type="email" id="correo_electronico" name="correo_electronico" placeholder="Correo electrónico" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" title="Formato de correo no válido. Debe ser similar a nombre@dominio.com" required>
             </label>
             <label for="tipoUsuario">
-                <select id="tipoUsuario" name="usertype" required>
+                <select id="tipoUsuario" name="usertype" onchange="showOptions(this.value)" required>
                     <option value="">Tipo de usuario</option>
-                    <option value="operativo">Operativo</option>
-                    <option value="admin">Admin</option>
+                    <option value="operativo">Operador</option>
+                    <option value="admin">Administrador</option>
                 </select>
             </label>
+            <!-- Lista de opciones para el usuario administrador -->
+            <div class="options-list" id="adminOptions">
+                <label>
+                    <input type="checkbox" name="options[]" value="registrarUsuario"> Registrar usuario
+                </label>
+                <label>
+                    <input type="checkbox" name="options[]" value="modificarDatos"> Modificar datos
+                </label>
+                <label>
+                    <input type="checkbox" name="options[]" value="eliminarUsuarios"> Eliminar usuarios
+                </label>
+            </div>
+            <!-- Lista de opciones para el usuario operativo -->
+            <div class="options-list" id="operativoOptions">
+                <label>
+                    <input type="checkbox" name="options[]" value="seleccionarElementos"> Seleccionar elementos
+                </label>
+                <label>
+                    <input type="checkbox" name="options[]" value="borrarElementos"> Borrar elementos
+                </label>
+                <label>
+                    <input type="checkbox" name="options[]" value="mostrarSeleccion"> Mostrar selección
+                </label>
+            </div>
             <label for="password">
                 <input type="password" id="password" placeholder="Contraseña" name="password" required>
             </label>
@@ -50,5 +79,30 @@
         </form>
         <a class="return-link" href="login">Volver a Inicio de Sesión</a>
     </div>
+
+    <script>
+        // Función para mostrar u ocultar las opciones según el tipo de usuario seleccionado
+        function showOptions(userType) {
+            var adminOptions = document.getElementById("adminOptions");
+            var operativoOptions = document.getElementById("operativoOptions");
+
+            // Oculta ambas listas por defecto
+            adminOptions.style.display = "none";
+            operativoOptions.style.display = "none";
+
+            // Muestra la lista correspondiente al tipo de usuario seleccionado
+            if (userType === "admin") {
+                adminOptions.style.display = "block";
+            } else if (userType === "operativo") {
+                operativoOptions.style.display = "block";
+            }
+        }
+
+        // Función para validar el formulario antes de enviarlo
+        function validateForm() {
+            // lógica de validación
+            return true; // Devuelve true si el formulario es válido y puede ser enviado
+        }
+    </script>
 </body>
 </html>
