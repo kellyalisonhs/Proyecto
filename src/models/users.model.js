@@ -60,3 +60,23 @@ export async function updatePasswordByEmail(correo_electronico, newPassword) {
   const [result] = await conn.query(strSql, [hashedPassword, correo_electronico]);
   return result;
 }
+
+/* modelo para Actualizar usuario */
+export async function actualizar(user) {
+  const { id, username, correo_electronico, usertype, password, question, answer } = user;
+  
+  // Hash de la contraseña proporcionada antes de almacenarla en la base de datos
+  const hashedPassword = createHash('md5').update(password).digest('hex');
+  
+  const strSql = 'UPDATE user SET name_u = ?, email_u = ?, passwd_u = ?, type_u = ?, question_u = ?, answer_u = ? WHERE id = ?';
+  // para manejar errores en la consulta
+  try {
+    const [result] = await conn.query(strSql, [id,username, correo_electronico, usertype, password, question, answer]);
+    console.log(result); // loguea el resultado de la consulta
+    return result;
+  } catch (error) {
+    console.error("Error en la consulta SQL:", error);
+    throw error; // propaga el error para que sea manejado en el servicio
+  }
+}
+
