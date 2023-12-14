@@ -36,16 +36,10 @@ app.use((req, res, next) => {
   })
 })*/
 
-
-
 //app.use(express.json());
 app.use (indexRoutes);
 app.use (usersRoutes);
 
-
-
 app.listen(PORT,()=>{
   console.log(`Servidor ejecutandose en el puerto ${PORT}`);  
 });
-
-

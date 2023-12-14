@@ -31,6 +31,10 @@ export const getChangePasswd = (req, res) => {
    res.render("changePasswd.hbs")
 }
 
+export const getCatalogue = (req, res) => {
+   res.render("catalogue.hbs")
+}
+
 export const login = (req, res)=>{
    let {email, passwd} = req.body;
    
