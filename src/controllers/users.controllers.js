@@ -7,10 +7,9 @@ export const getAllUsers = (req, res)=>{
    /* Consumo con async y await */
    (async () => {      
       let users = await userService.getAllUsers(); 
-      //res.render("users",{"list":users});
-      res.json(users);    
-    })(); 
-}
+      res.render("users",{"list":users});    
+    })();      
+};
 
 export const getRegisterForm = (req, res) => {
    res.render("register.hbs")
@@ -66,8 +65,7 @@ export const registerUser = async (req, res) => {
       });
 
       // Redirige al usuario a la ruta "/login" con un mensaje de éxito
-      //res.redirect('/login?success=usuario-registrado-exitosamente');
-      res.json('Usuario Registrado');
+      res.redirect('/login?success=usuario-registrado-exitosamente');
       /* res.send("Usuario registrado exitosamente"); */
    } catch (error) {
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
@@ -128,32 +126,3 @@ export const recoveryAnswer = async (req, res) => {
       res.status(400).send(`Error al validar la respuesta: ${error.message}`);
    }
 }
-
-/* controlador para Actualizar usuario */
-export const ActualizarUser = async (req, res) => {
-   const { id, username, correo_electronico, usertype, password, confirmPassword, question, answer } = req.body;
-
-   console.log(req.body);
-
-   try {
-      // llama a la función del servicio para registrar al usuario
-      await userService.actualizarUser({
-         id,
-         username,
-         correo_electronico,
-         usertype,
-         password,
-         confirmPassword,
-         question,
-         answer
-      });
-
-      // Redirige al usuario a la ruta "/login" con un mensaje de éxito
-      //res.redirect('/login?success=usuario-registrado-exitosamente');
-      res.json('Usuario Actualizado');
-      /* res.send("Usuario registrado exitosamente"); */
-   } catch (error) {
-      // Manejo de errores: Envía un mensaje de error y un código de estado 400
-      res.status(400).send(`Error al actualizar el usuario: ${error.message}`);
-   }
-};
