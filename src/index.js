@@ -42,7 +42,15 @@ app.use((req, res, next) => {
 
 //app.use(express.json());
 app.use (indexRoutes);
+<<<<<<< HEAD
 
 app.listen(PORT,()=>{
   console.log(`Servidor ejecutandose en el puerto ${PORT}`);  
 });
+=======
+app.use (usersRoutes);
+
+app.listen(PORT,()=>{
+  console.log(`Servidor ejecutandose en el puerto ${PORT}`);  
+});
+>>>>>>> ff7b965ac69f1a4c3a820dba8d3318f5aa96dde7
