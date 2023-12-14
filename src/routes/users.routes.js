@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer, getCatalogue } from "../controllers/users.controllers.js"
+import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer, ActualizarUser } from "../controllers/users.controllers.js"
+
+//import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer, getCatalogue } from "../controllers/users.controllers.js"
 
 const router = Router();
 
@@ -19,5 +21,7 @@ router.post('/register', registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-passwd", searchUserByEmail);
 router.post("/passwd-recovery", recoveryAnswer);
+
+router.put("/", ActualizarUser);
 
 export default router;
