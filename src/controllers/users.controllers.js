@@ -1,5 +1,9 @@
 /* users.controllers.js */
+import dotenv from 'dotenv';
+dotenv.config();
 import * as userService from '../services/users.service.js';
+import { SignJWT } from 'jose';
+import md5 from 'md5';
 
 export const getAllUsers = (req, res)=>{
    // consumo de la promesa retornada en el servicio que accede a la BD  
@@ -74,17 +78,41 @@ export const registerUser = async (req, res) => {
 };
 
 /* controlador para inicio de sesión */
-export const loginUser = async (req, res) => {
+
+
+export const loginUserJWT = async (req, res) => {
    const { username, password } = req.body;
-   try {
-      const user = await userService.loginUser(username, password);
+     try {
+      const {user} = await userService.loginUser(username, password);
       // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
       // se agrega un mensaje de inicio existoso en la url
-      res.redirect("/users-list?success=inicio-de-sesion-exitoso");
+      const encoder= new TextEncoder();
+      const jwtCostructor= new SignJWT({user});
+      const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+      return res.send({jwt});
+      //res.redirect("/users-list?success=inicio-de-sesion-exitoso");
    } catch (error) {
       res.status(400).send(`Error al iniciar sesión: ${error.message}`);
    }
 };
+export const loginUser = async (req, res) => {
+   
+   const { username, password } = req.body;
+   const hashedPassword = md5(password);
+   try {
+     const user = await userService.loginUser(username,  hashedPassword);
+     // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
+     const encoder= new TextEncoder();
+       const jwtCostructor= new SignJWT({user});
+       const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+       return res.send({jwt});
+     res.redirect("/users-list");
+   } catch (error) {
+     res.status(400).send(`Error al iniciar sesión: ${error.message}`);
+   }
+ };
+
+
 
 /* controlador para búsqueda de usuario por correo electrónico para recuperación de contraseña */
 export const searchUserByEmail = async (req, res) => {
