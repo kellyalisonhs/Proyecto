@@ -42,10 +42,9 @@ hbs.registerPartials(__dirname + '/views/partials', function (err) {});
 
 //app.use(express.json());
 app.use (indexRoutes);
-app.use(usersRoutes)
-app.use('/API', usersRoutes);
+app.use (usersRoutes);
+app.use ("/API", usersRoutes);
 
 app.listen(PORT,()=>{
   console.log(`Servidor ejecutandose en el puerto ${PORT}`);  
 });
-
