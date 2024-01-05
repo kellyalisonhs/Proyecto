@@ -35,6 +35,10 @@ export const getCatalogue = (req, res) => {
    res.render("catalogue.hbs")
 }
 
+export const getMarvelCatalogue = (req, res) => {
+   res.render("marvelCatalogue.hbs")
+}
+
 export const login = (req, res)=>{
    let {email, passwd} = req.body;
    
