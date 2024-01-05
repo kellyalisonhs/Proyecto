@@ -27,6 +27,14 @@ export async function getUserByUsername(username){
   return result;
 }
 
+
+
+export async function getUserByUsernameAndPassword(username, password) {
+
+  const strSql = 'SELECT * FROM user WHERE name_u = ? AND passwd_u = ?';
+  const [result] = await conn.query(strSql, [username, password]);
+  return result;
+}
 /* modelo para registrar usuario */
 export async function createUser(user) {
   const { username, correo_electronico, usertype, password, question, answer } = user;

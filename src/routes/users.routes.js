@@ -9,6 +9,7 @@ const router = Router();
 router.get("/change-passwd", getChangePasswd);
 router.get("/forgot-passwd", getForgotPasswd);
 router.get("/login", getLoginForm);
+
 router.get("/passwd-recovery", getPasswdRecovery);
 router.get("/register", getRegisterForm);
 router.get("/users-list", getAllUsers);
