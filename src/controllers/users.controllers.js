@@ -2,8 +2,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import * as userService from '../services/users.service.js';
-import { SignJWT } from 'jose';
+import { SignJWT,jwtVerify } from 'jose';
 import md5 from 'md5';
+import {conn} from '../../db.js';
 
 export const getAllUsers = (req, res)=>{
    // consumo de la promesa retornada en el servicio que accede a la BD  
@@ -35,8 +36,27 @@ export const getChangePasswd = (req, res) => {
    res.render("changePasswd.hbs")
 }
 
-export const getCatalogue = (req, res) => {
-   res.render("catalogue.hbs")
+export const getCatalogue = async (req, res) => {
+   const {authorization} = req.headers;;
+    if(!authorization) return res.status(401);
+
+    try{
+      const encoder= new TextEncoder();
+      const {payload}= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
+      const { id } =payload.user;
+      const strSql = 'SELECT * FROM user WHERE id = ?';   
+      const [result] = await conn.query(strSql,[id]);      
+      if (result.length === 0) {
+         return res.status(401).send("ID de usuario no válido");
+       }
+      console.log(id)
+     
+      res.render("catalogue.hbs")
+    }catch(err){
+    
+      return res.status(401).send("Token inválido");
+       }
+
 }
 
 export const login = (req, res)=>{
@@ -81,13 +101,13 @@ export const registerUser = async (req, res) => {
 
 
 export const loginUserJWT = async (req, res) => {
-   const { username, password } = req.body;
+   const {username, password } = req.body;
      try {
-      const {user} = await userService.loginUser(username, password);
+      const {id} = await userService.loginUser(username, password);
       // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
       // se agrega un mensaje de inicio existoso en la url
       const encoder= new TextEncoder();
-      const jwtCostructor= new SignJWT({user});
+      const jwtCostructor= new SignJWT({id});
       const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
       return res.send({jwt});
       //res.redirect("/users-list?success=inicio-de-sesion-exitoso");
@@ -95,6 +115,24 @@ export const loginUserJWT = async (req, res) => {
       res.status(400).send(`Error al iniciar sesión: ${error.message}`);
    }
 };
+export const catalogueJWT = async (req, res) => {
+   const {authorization} = req.headers;;
+    if(!authorization) return res.status(401);
+
+    try{
+      const encoder= new TextEncoder();
+      const jwtdata= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
+      console.log(jwtdata)
+    }catch(err){
+      return res.status(401);
+       }
+
+};
+
+
+
+
+
 export const loginUser = async (req, res) => {
    
    const { username, password } = req.body;

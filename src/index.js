@@ -48,3 +48,4 @@ app.listen(PORT,()=>{
 
 const apiKey = process.env.JWT_PRIVATE_KEY;
 console.log(apiKey)
+

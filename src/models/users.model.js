@@ -27,6 +27,8 @@ export async function getUserByUsername(username){
   return result;
 }
 
+
+
 export async function getUserByUsernameAndPassword(username, password) {
 
   const strSql = 'SELECT * FROM user WHERE name_u = ? AND passwd_u = ?';
