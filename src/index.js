@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import hbs from 'hbs';
 
@@ -48,3 +50,7 @@ app.use ("/API", usersRoutes);
 app.listen(PORT,()=>{
   console.log(`Servidor ejecutandose en el puerto ${PORT}`);  
 });
+
+const apiKey = process.env.JWT_PRIVATE_KEY;
+console.log(apiKey)
+

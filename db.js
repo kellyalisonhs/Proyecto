@@ -1,9 +1,9 @@
-// desestructuración {}
 import {createPool} from 'mysql2/promise'; 
 
 export const conn = createPool({
     host: 'localhost',
-    user: 'IngeWeb',
-    password: 'yare1610$',
+    user: 'root',
+    password: 'sapo123',
+    port: 3306,
     database: 'users'
 });

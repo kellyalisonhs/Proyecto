@@ -1,5 +1,10 @@
 /* users.controllers.js */
+import dotenv from 'dotenv';
+dotenv.config();
 import * as userService from '../services/users.service.js';
+import { SignJWT,jwtVerify } from 'jose';
+import md5 from 'md5';
+import {conn} from '../../db.js';
 
 
 export const getAllUsers = (req, res)=>{
@@ -35,8 +40,31 @@ export const getChangePasswd = (req, res) => {
    res.render("changePasswd.hbs")
 }
 
-export const getCatalogue = (req, res) => {
-   res.render("catalogue.hbs")
+export const getCatalogue = async (req, res) => {
+   const {authorization} = req.headers;;
+    if(!authorization) return res.status(401);
+
+    try{
+      const encoder= new TextEncoder();
+      const {payload}= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
+      const { id } =payload.user;
+      const strSql = 'SELECT * FROM user WHERE id = ?';   
+      const [result] = await conn.query(strSql,[id]);      
+      if (result.length === 0) {
+         return res.status(401).send("ID de usuario no válido");
+       }
+      console.log(id)
+     
+      res.render("catalogue.hbs")
+    }catch(err){
+    
+      return res.status(401).send("Token inválido");
+       }
+
+}
+
+export const getMarvelCatalogue = (req, res) => {
+   res.render("marvelCatalogue.hbs")
 }
 
 
@@ -80,17 +108,59 @@ export const registerUser = async (req, res) => {
 };
 
 /* controlador para inicio de sesión */
-export const loginUser = async (req, res) => {
-   const { username, password } = req.body;
-   try {
-      const user = await userService.loginUser(username, password);
+
+
+export const loginUserJWT = async (req, res) => {
+   const {username, password } = req.body;
+     try {
+      const {id} = await userService.loginUser(username, password);
       // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
       // se agrega un mensaje de inicio existoso en la url
-      res.redirect("/users-list?success=inicio-de-sesion-exitoso");
+      const encoder= new TextEncoder();
+      const jwtCostructor= new SignJWT({id});
+      const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+      return res.send({jwt});
+      //res.redirect("/users-list?success=inicio-de-sesion-exitoso");
    } catch (error) {
       res.status(400).send(`Error al iniciar sesión: ${error.message}`);
    }
 };
+export const catalogueJWT = async (req, res) => {
+   const {authorization} = req.headers;;
+    if(!authorization) return res.status(401);
+
+    try{
+      const encoder= new TextEncoder();
+      const jwtdata= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
+      console.log(jwtdata)
+    }catch(err){
+      return res.status(401);
+       }
+
+};
+
+
+
+
+
+export const loginUser = async (req, res) => {
+   
+   const { username, password } = req.body;
+   const hashedPassword = md5(password);
+   try {
+     const user = await userService.loginUser(username,  hashedPassword);
+     // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
+     const encoder= new TextEncoder();
+       const jwtCostructor= new SignJWT({user});
+       const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+       return res.send({jwt});
+     res.redirect("/users-list");
+   } catch (error) {
+     res.status(400).send(`Error al iniciar sesión: ${error.message}`);
+   }
+ };
+
+
 
 /* controlador para búsqueda de usuario por correo electrónico para recuperación de contraseña */
 export const searchUserByEmail = async (req, res) => {
