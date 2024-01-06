@@ -21,7 +21,7 @@
 
 img {
     width: 100%;
-    height: 12.5rem;
+    border-radius: 5px;
 }
 
 body {
@@ -112,6 +112,7 @@ header {
     font-size: 1.5rem;
     font-weight: 600;
     margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 #close-cart {
@@ -125,7 +126,8 @@ header {
 
 .cart-box {
     display: grid;
-    grid-template-columns: 32% 50% 18%;
+    /* grid-template-columns: 32% 50% 18%; */
+    grid-template-columns: 32% 46% 10%;
     align-items: center;
     gap: 1rem;
     margin-top: 1rem;
@@ -166,8 +168,26 @@ header {
     cursor: pointer;
 }
 
-/* pendiente: para ajustar y/o visualizar todos los elementos seleccionados (después de x cantidad de elementos a pesar de que se seleccionan ya no es posible visualizarlos) */
-/* .cart-content {}   */
+/* Estilos para el contenedor del carrito */
+.cart-content {
+    overflow-y: auto;
+    max-height: 450px;
+}
+
+/* Estilos personalizados para la barra de desplazamiento */
+.cart-content::-webkit-scrollbar {
+    width: 10px; /* Ancho de la barra de desplazamiento */
+}
+
+.cart-content::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color del "pulgarcito" (la parte arrastrable) */
+    border-radius: 5px; /* Bordes redondeados del pulgar */
+}
+
+.cart-content::-webkit-scrollbar-track {
+    background-color: #f2f2f2; /* Color del fondo de la barra de desplazamiento */
+    border-radius: 5px; /* Bordes redondeados del fondo de la barra */
+}
 
 /* Productos */
 .section-title {
@@ -236,41 +256,6 @@ header {
     background: hsl(249, 32%, 17%);
 }
 
-.sc-container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.sc-container img {
-    width: 200px;
-    margin: 2rem 0;
-}
-
-.sc-container h1 {
-    font-size: 2.8rem;
-    margin-bottom: 10px;
-}
-
-.sc-container p {
-    max-width: 600px;
-    font-size: 0.97rem;
-    text-align: center;
-    margin: 0.5rem 0;
-}
-
-.sc-btn {
-    padding: 12px 20px;
-    border-radius: 2rem;
-    background: var(--text-color);
-    color: var(--bg-color);
-    font-size: 1rem;
-    font-weight: 500;
-}
-
 /* Responsive design */
 @media (max-width: 1080px) {
     .nav {
@@ -296,7 +281,8 @@ header {
         font-size: 1rem;
     }
     .cart {
-        width: 320px;
+        /* width: 320px; */
+        width: 100%;
     }
 }
 
@@ -304,7 +290,7 @@ header {
     .shop {
         margin-top: 1rem !important;
     }
-    .cart {
+    /* .cart {
         width: 100%;
-    }
+    } */
 }
