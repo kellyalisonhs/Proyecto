@@ -1,5 +1,6 @@
 /* Google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
 * {
     font-family: 'Poppins', sans-serif;
@@ -14,13 +15,15 @@
 
 :root {
     --main-color: #fd4646;
-    --text-color: #02ac70;
+    /* --text-color: #02ac70; */
+    --text-color: #e62429;
     --bg-color: #fff;
-    --container-color: #1e1e2a;
+    --container-color: #202020;
 }
 
 img {
     width: 100%;
+    height: 70%;
     border-radius: 5px;
 }
 
@@ -57,9 +60,9 @@ header {
 }
 
 .logo {
-    font-size: 1.1rem;
+    font-size: 2rem;
     color: var(--bg-color);
-    font-weight: 600;
+    font-family: fantasy;
 }
 
 #cart-icon {
@@ -113,6 +116,25 @@ header {
     font-weight: 600;
     margin-top: 2rem;
     margin-bottom: 1rem;
+    border-bottom: 1px solid var(--text-color);
+    padding-bottom: 5px
+}
+
+.btn-buy {
+    display: flex;
+    height: 50px;
+    justify-content: center;
+    margin: 2rem auto 0 auto;
+    padding: 12px 20px;
+    width: 50%;
+    text-align: center;
+    border: none;
+    border-radius: 2rem;
+    background: var(--text-color);
+    color: var(--bg-color);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 #close-cart {
@@ -126,7 +148,6 @@ header {
 
 .cart-box {
     display: grid;
-    /* grid-template-columns: 32% 50% 18%; */
     grid-template-columns: 32% 46% 10%;
     align-items: center;
     gap: 1rem;
@@ -171,12 +192,12 @@ header {
 /* Estilos para el contenedor del carrito */
 .cart-content {
     overflow-y: auto;
-    max-height: 450px;
+    max-height: 380px;
 }
 
 /* Estilos personalizados para la barra de desplazamiento */
 .cart-content::-webkit-scrollbar {
-    width: 10px; /* Ancho de la barra de desplazamiento */
+    width: 8px; /* Ancho de la barra de desplazamiento */
 }
 
 .cart-content::-webkit-scrollbar-thumb {
@@ -273,6 +294,12 @@ header {
     }
 }
 
+@media (max-width: 620px) {
+    .cart {
+        width: 100%;
+    }
+}
+
 @media (max-width: 400px) {
     .nav {
         padding: 12px 0;
@@ -280,17 +307,10 @@ header {
     .logo {
         font-size: 1rem;
     }
-    .cart {
-        /* width: 320px; */
-        width: 100%;
-    }
 }
 
 @media (max-width: 360px) {
     .shop {
         margin-top: 1rem !important;
     }
-    /* .cart {
-        width: 100%;
-    } */
 }

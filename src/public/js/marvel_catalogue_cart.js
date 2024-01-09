@@ -134,7 +134,7 @@ function addProductToCart(title, productImg) {
     // Verificar si el producto ya está en el carrito
     for (var i = 0; i < cartItemsNames.length; i++) {
         if (cartItemsNames[i].innerText == title) {
-            alert('Ya has agregado este producto al carrito');
+            alert('Ya has agregado este personaje a tu lista de favoritos');
             return;
         }
     }
