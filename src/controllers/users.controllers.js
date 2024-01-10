@@ -83,7 +83,7 @@ export const login = (req, res)=>{
 
 /* controlador para registrar usuario */
 export const registerUser = async (req, res) => {
-   const { username, correo_electronico, usertype, password, confirmPassword, question, answer } = req.body;
+   const { username, correo_electronico, usertype, password, confirmPassword} = req.body;
 
    try {
       // llama a la función del servicio para registrar al usuario
@@ -92,9 +92,7 @@ export const registerUser = async (req, res) => {
          correo_electronico,
          usertype,
          password,
-         confirmPassword,
-         question,
-         answer
+         confirmPassword
       });
 
       // Redirige al usuario a la ruta "/login" con un mensaje de éxito
@@ -125,6 +123,7 @@ export const loginUserJWT = async (req, res) => {
       res.status(400).send(`Error al iniciar sesión: ${error.message}`);
    }
 };
+
 export const catalogueJWT = async (req, res) => {
    const {authorization} = req.headers;;
     if(!authorization) return res.status(401);
@@ -138,10 +137,6 @@ export const catalogueJWT = async (req, res) => {
        }
 
 };
-
-
-
-
 
 export const loginUser = async (req, res) => {
    
@@ -205,7 +200,7 @@ export const recoveryAnswer = async (req, res) => {
 
 /* controlador para Actualizar usuario */
 export const ActualizarUser = async (req, res) => {
-   const { id, username, correo_electronico, usertype, password, confirmPassword, question, answer } = req.body;
+   const { id, username, correo_electronico, usertype, password, confirmPassword} = req.body;
 
    console.log(req.body);
 
@@ -218,8 +213,6 @@ export const ActualizarUser = async (req, res) => {
          usertype,
          password,
          confirmPassword,
-         question,
-         answer
       });
 
       // Redirige al usuario a la ruta "/login" con un mensaje de éxito
@@ -229,5 +222,20 @@ export const ActualizarUser = async (req, res) => {
    } catch (error) {
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
       res.status(400).send(`Error al actualizar el usuario: ${error.message}`);
+   }
+};
+
+//Controlador para eliminar usuario.
+export const eliminar = async (req, res) => {
+   const { id }=req.params;
+   try {
+      //Llama a la función del servicio para eliminar al usuario
+      await userService.eliminar(id);
+
+      //Envia una respuesta JSON indicando que el usuario fue eliminado exitosamente
+      res.json ({ message: 'Usuario eliminado exitosamente'});
+   } catch (error)    {
+      //Manejo de errores: Envia un mensaje de error y un código de estado 500 (Error del servidor)
+      res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
    }
 };

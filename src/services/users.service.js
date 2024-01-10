@@ -2,6 +2,7 @@
 import * as userModel from '../models/users.model.js';
 import { createHash } from "crypto";
 
+//Servicio para mostrar todos los usuarios
 export const getAllUsers = async()=> {
    let obj, userObjs=[];
    /**
@@ -48,9 +49,7 @@ export const registerUser = async (userData) => {
          !userData.correo_electronico ||
          !userData.usertype ||
          !userData.password ||
-         !userData.confirmPassword ||
-         !userData.question ||
-         !userData.answer
+         !userData.confirmPassword
       ) {
          throw new Error("Todos los campos son obligatorios.");
       }
@@ -172,9 +171,7 @@ export const actualizarUser = async (userData) => {
          !userData.username &&
          !userData.correo_electronico &&
          !userData.usertype &&
-         !userData.password &&
-         !userData.question &&
-         !userData.answer
+         !userData.password
       ) {
          throw new Error("Se requiere al menos un campo para actualizar.");
       }
@@ -204,3 +201,23 @@ export const actualizarUser = async (userData) => {
       throw error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
    }
 };
+
+//Eliminar un usuario mediante el ID
+export const eliminar = async (id) => {
+   try{
+      console.log ("ID_usuario", id);
+
+      //Validacion previa a la eliminación en la base de datos.
+      if(!id)
+      {
+         throw new Error("Se requiere el ID del usuario para eliminar.");
+      }
+
+      //Se llama la función del modelo para eliminar el usuario
+      const result = await userModel.eliminar(id);
+      return result;
+   } catch(error) {
+      console.error ("Error al eliminar el usuario: ", error);
+      throw error;
+   }
+}
