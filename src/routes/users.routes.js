@@ -2,7 +2,7 @@
 import { Router } from "express";
 
 
-import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar } from "../controllers/users.controllers.js";
+import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar, deleteUser } from "../controllers/users.controllers.js";
 
 
 const router = Router();
