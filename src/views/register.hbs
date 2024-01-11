@@ -39,64 +39,16 @@
                     <option value="admin">Administrador</option>
                 </select>
             </label>
-            <!-- Lista de opciones para el usuario administrador -->
-            <div class="options-list" id="adminOptions">
-                <label>
-                    <input type="checkbox" name="options[]" value="registrarUsuario"> Registrar usuario
-                </label>
-                <label>
-                    <input type="checkbox" name="options[]" value="modificarDatos"> Modificar datos
-                </label>
-                <label>
-                    <input type="checkbox" name="options[]" value="eliminarUsuarios"> Eliminar usuarios
-                </label>
-            </div>
-            <!-- Lista de opciones para el usuario operativo -->
-            <div class="options-list" id="operativoOptions">
-                <label>
-                    <input type="checkbox" name="options[]" value="seleccionarElementos"> Seleccionar elementos
-                </label>
-                <label>
-                    <input type="checkbox" name="options[]" value="borrarElementos"> Borrar elementos
-                </label>
-                <label>
-                    <input type="checkbox" name="options[]" value="mostrarSeleccion"> Mostrar selección
-                </label>
-            </div>
             <label for="password">
                 <input type="password" id="password" placeholder="Contraseña" name="password" required>
             </label>
             <label for="confirmPassword">
                 <input type="password" id="confirmPassword" placeholder="Confirmar contraseña" name="confirmPassword" required>
             </label>
-            <label for="question">
-                <input type="text" id="question" placeholder="Pregunta de recuperación" name="question" required>
-            </label>
-            <label for="answer">
-                <input type="text" id="answer" placeholder="Respuesta" name="answer" required>
-            </label>
+            
             <button type="submit">Registrarse</button>
         </form>
         <a class="return-link" href="login">Volver a Inicio de Sesión</a>
     </div>
-
-    <script>
-        // Función para mostrar u ocultar las opciones según el tipo de usuario seleccionado
-        function showOptions(userType) {
-            var adminOptions = document.getElementById("adminOptions");
-            var operativoOptions = document.getElementById("operativoOptions");
-
-            // Oculta ambas listas por defecto
-            adminOptions.style.display = "none";
-            operativoOptions.style.display = "none";
-
-            // Muestra la lista correspondiente al tipo de usuario seleccionado
-            if (userType === "admin") {
-                adminOptions.style.display = "block";
-            } else if (userType === "operativo") {
-                operativoOptions.style.display = "block";
-            }
-        }
-    </script>
 </body>
 </html>

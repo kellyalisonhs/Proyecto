@@ -1,4 +1,9 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+
 * {
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -9,122 +14,117 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f0faff; 
-  background-image: url('https://dbdzm869oupei.cloudfront.net/img/photomural/preview/70518.png'); 
+  background: #0c0c0c; /* Fondo oscuro para mejorar el contraste */
+  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL._AC_UF894,1000_QL80_.jpg');
   background-size: cover;
   background-position: center;
+  font-family: 'Bangers', cursive; /* Cambio de tipo de letra a una de estilo de cómic */
+  color: #fff; /* Texto blanco para mayor contraste */
 }
-  
+
 .wrapper {
   position: relative;
   max-width: 470px;
   width: 100%;
   border-radius: 12px;
-  padding: 20px 30px 120px;
-  background: #fafafa;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  padding: 35px; /* Ajuste en el padding superior */
+  background: snow; /* Fondo blanco sólido para el formulario */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
-  
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 20px;
 }
-  
+
 .form-title h2 {
-  font-size: 30px;
+  font-size: 35px;
   text-align: center;
-  color: #ef76df;
-  font-weight: 600;
+  color: #ed1d24; /* Rojo característico de Marvel para el título */
+  font-weight: 800;
 }
-  
+
 label {
   position: relative;
 }
-  
-input {
-  height: 60px;
+
+input,
+select {
+  height: 50px;
   outline: none;
-  border: none;
+  border: 2px solid #555; /* Borde oscuro */
   padding: 0 15px;
-  font-size: 16px;
+  font-size: 18px; /* Tamaño de letra aumentado */
   font-weight: 400;
-  color: #333;
+  color: #333333; /* Blanco más oscuro para los campos de entrada */
   border-radius: 8px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8); /* Fondo blanco para los campos de entrada con opacidad */
   width: 100%;
 }
 
 .Titulo {
-  font-size: 48px;  
-  text-align: center; 
-  color: #ff69b4; 
-  font-weight: 800;
-  margin-bottom: 20px;
-} 
-  
-select {
-  height: 60px;
-  outline: none;
-  border: none;
-  padding: 0 15px;
-  font-size: 16px;
-  font-weight: 400;
-  color: #333;  
-  border-radius: 8px;   
-  background: #fff;
-  width: 100%;
+  font-family: 'Bangers', system-ui;
+  font-size: 4rem;
+  text-align: center;
+  color: #ed1d24;
+  /* letter-spacing: 0.1rem; */
 }
-  
+
 .checkbox {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-  
+
 .checkbox input[type="checkbox"] {
-  height: 16px;
-  width: 16px;
-  accent-color: #fff;
+  height: 20px; /* Tamaño del checkbox aumentado */
+  width: 20px; /* Tamaño del checkbox aumentado */
+  accent-color: #ed1d24; /* Rojo característico de Marvel para el checkbox */
   cursor: pointer;
 }
-  
+
 .checkbox label {
   cursor: pointer;
-  color: #fff;
+  color: #333333; /* Blanco más oscuro para el texto del checkbox */
 }
-  
-button {
-  height: 60px;
-  font-size: 18px;   
-  font-weight: 500;
+
+/* Cambios de color para los botones sin transparencia */
+button,
+.form.login input[type="submit"],
+.link-container a {
+  height: 60px; /* Tamaño del botón aumentado */
+  font-size: 18px; /* Tamaño de letra ajustado */
+  font-weight: 600; /* Peso de la letra aumentado */
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  width: 100%;
+  width: 100%; /* Ancho al 100% para ocupar todo el contenedor */
+  color: #fff; /* Texto blanco para los botones */
+  background: #ed1d24; /* Rojo característico de Marvel para el fondo del botón principal */
+  transition: background 0.3s ease; /* Efecto de transición para el cambio de color */
 }
-  
-.form.login input[type="submit"] {
-  background: #f4f4f5;
-  color: #fff;
+
+.button-secondary {
+  background: #1e90ff; /* Azul para el fondo del botón secundario */
 }
-  
+
 .link-container {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-between; /* Espacio uniforme entre los enlaces */
+  gap: 10px;
 }
-  
+
 .link-container a {
-  color: #333;
   text-decoration: none;
 }
-  
+
 .link-container a:hover {
   text-decoration: underline;
 }
+<<<<<<< HEAD
 table{
   font-size: 25px;  
   text-align: center; 
@@ -142,4 +142,10 @@ h1{
   display: block;
   text-align: center;
   margin-top: 20px;
+=======
+
+/* Cambio de color al pasar el ratón sobre el botón principal */
+.button-primary:hover {
+  background: #b30000; /* Rojo oscuro al pasar el ratón para mayor contraste */
+>>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
 }

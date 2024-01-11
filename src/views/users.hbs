@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
     <link rel="stylesheet" href="css/Proyecto.css">
 
+=======
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styleList.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: black; /* Cambia el color del texto a negro */
+    }
+
+    #title {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #wrapper {
+      margin-top: 20px;
+    }
+
+    .eliminar-btn {
+      cursor: pointer;
+      background-color: #ff6347;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+>>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
 </head>
 <body>  
 <div class="wrapper">
@@ -28,6 +60,7 @@
 {{/each}}
 </table>
 
+<<<<<<< HEAD
 <div class="inicio-link">
             
                 <a class="return-link"href="login">Inicio de Sesion</a>
@@ -36,5 +69,37 @@
         </div>
 
 </div>
+=======
+  <div id="wrapper">
+    <div class="usuarios-box">
+      <table id="lista">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Correo electrónico</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        
+        {{#each list}}
+        
+        <tr>      
+          <td>{{name}}</td>
+          <td>{{email}}</td>
+          <td><button class="eliminar-btn" onclick="eliminarUsuario('{{name_u}}')">Eliminar</button></td>
+        </tr>
+        {{/each}}
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function eliminarUsuario(nombre) {
+      // Aquí puedes implementar la lógica para eliminar el usuario con el nombre proporcionado.
+      // Por ahora, solo mostraremos un mensaje en la consola.
+      console.log("Eliminar usuario: " + nombre);
+    }
+  </script>
+>>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
 </body>
 </html>

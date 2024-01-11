@@ -27,25 +27,30 @@ export async function getUserByUsername(username){
   return result;
 }
 
-
-
 export async function getUserByUsernameAndPassword(username, password) {
-
   const strSql = 'SELECT * FROM user WHERE name_u = ? AND passwd_u = ?';
   const [result] = await conn.query(strSql, [username, password]);
   return result;
 }
+
+// Agrega una función para obtener el tipo de usuario por nombre de usuario
+export async function getUserTypeByUsername(username) {
+  const strSql = 'SELECT type_u FROM user WHERE name_u = ?';
+  const [result] = await conn.query(strSql, [username]);
+  return result.length > 0 ? result[0].type_u : null;
+}
+
 /* modelo para registrar usuario */
 export async function createUser(user) {
-  const { username, correo_electronico, usertype, password, question, answer } = user;
+  const { username, correo_electronico, usertype, password } = user;
   
   // Hash de la contraseña proporcionada antes de almacenarla en la base de datos
   const hashedPassword = createHash('md5').update(password).digest('hex');
   
-  const strSql = 'INSERT INTO user (name_u, email_u, type_u, passwd_u, question_u, answer_u) VALUES (?, ?, ?, ?, ?, ?)';
+  const strSql = 'INSERT INTO user (name_u, email_u, type_u, passwd_u) VALUES (?, ?, ?, ?)';
   // para manejar errores en la consulta
   try {
-    const [result] = await conn.query(strSql, [username, correo_electronico, usertype, password, question, answer]);
+    const [result] = await conn.query(strSql, [username, correo_electronico, usertype, password]);
     console.log(result); // loguea el resultado de la consulta
     return result;
   } catch (error) {
@@ -68,8 +73,46 @@ export async function updatePasswordByEmail(correo_electronico, newPassword) {
   const [result] = await conn.query(strSql, [hashedPassword, correo_electronico]);
   return result;
 }
+<<<<<<< HEAD
 export async function deleteUserById(id) {
   const strSql = 'DELETE FROM user WHERE id = ?';
   const [result] = await conn.query(strSql, [id]);
   return result;
 }
+=======
+
+/* modelo para Actualizar usuario */
+export async function actualizar(user) {
+  const { id, username, correo_electronico, usertype, password} = user;
+  
+  // Hash de la contraseña proporcionada antes de almacenarla en la base de datos
+  const hashedPassword = createHash('md5').update(password).digest('hex');
+  
+  const strSql = 'UPDATE user SET name_u = ?, email_u = ?, passwd_u = ?, type_u = ? WHERE id = ?';
+  // para manejar errores en la consulta
+  try {
+    const [result] = await conn.query(strSql, [id,username, correo_electronico, usertype, password]);
+    console.log(result); // loguea el resultado de la consulta
+    return result;
+  } catch (error) {
+    console.error("Error en la consulta SQL:", error);
+    throw error; // propaga el error para que sea manejado en el servicio
+  }
+}
+
+//Modelo para eliminar un usuario
+export async function eliminar (id)
+{
+  const strSql = 'DELETE FROM user Where id = ?';
+  try {
+    const [result] = await conn.query(strSql, [id]);
+    console.log(result); // Loguea el resultado de la consulta
+    return result;
+  } catch (error) {
+    console.error("Error en la consulta SQL:", error);
+    throw error; // Propaga el error para que sea manejado en el servicio
+  }
+
+}
+
+>>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
