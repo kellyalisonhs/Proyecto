@@ -1,10 +1,9 @@
 /* users.routes.js */
 import { Router } from "express";
-<<<<<<< HEAD
-import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser,deleteUser, loginUser, searchUserByEmail, recoveryAnswer, getCatalogue } from "../controllers/users.controllers.js"
-=======
+
+
 import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar } from "../controllers/users.controllers.js";
->>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
+
 
 const router = Router();
 

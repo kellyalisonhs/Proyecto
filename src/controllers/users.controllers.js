@@ -118,33 +118,7 @@ export const registerUser = async (req, res) => {
    } catch (error) {
       res.status(400).send("Error al registrar usuario: ${error.message}");
    }
-};
-
-<<<<<<< HEAD
-/* controlador para inicio de sesión */
-
-
-export const loginUser = async (req, res) => {
-   
-   const { username, password } = req.body;
-   const hashedPassword = md5(password);
-   try {
-     const user = await userService.loginUser(username,  hashedPassword);
-     // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
-     const encoder= new TextEncoder();
-       const jwtCostructor= new SignJWT({user});
-       const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-       //return res.send({jwt});
-       res.render("catalogue.hbs")
-   } catch (error) {
-     res.status(400).send(`Error al iniciar sesión: ${error.message}`);
-   }
- };
-
-
-
-/* controlador para búsqueda de usuario por correo electrónico para recuperación de contraseña */
-=======
+}
 export const catalogueJWT = async (req, res) => {
    const { authorization } = req.headers;
    if (!authorization) return res.status(401);
@@ -159,7 +133,7 @@ export const catalogueJWT = async (req, res) => {
 };
 
 /* controlador: recuperación de contraseña mediante búsqueda por correo electrónico */
->>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
+
 export const searchUserByEmail = async (req, res) => {
    const { correo_electronico } = req.body;
 
@@ -193,8 +167,8 @@ export const ActualizarUser = async (req, res) => {
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
       res.status(400).send("Error al actualizar el usuario: ${error.message}");
    }
-<<<<<<< HEAD
-}
+
+};
 export const deleteUser = async (req, res) => {
    const userId = req.params.id;
  
@@ -209,8 +183,8 @@ export const deleteUser = async (req, res) => {
  export const deleteUserById = async (userId) => {
    return await userModel.deleteUserById(userId);
  }
-=======
-};
+
+
 
 //Controlador para eliminar usuario.
 export const eliminar = async (req, res) => {
@@ -226,4 +200,4 @@ export const eliminar = async (req, res) => {
       res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
    }
 };
->>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
+

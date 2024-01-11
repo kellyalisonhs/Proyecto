@@ -124,7 +124,7 @@ button,
 .link-container a:hover {
   text-decoration: underline;
 }
-<<<<<<< HEAD
+
 table{
   font-size: 25px;  
   text-align: center; 
@@ -142,10 +142,4 @@ h1{
   display: block;
   text-align: center;
   margin-top: 20px;
-=======
-
-/* Cambio de color al pasar el ratón sobre el botón principal */
-.button-primary:hover {
-  background: #b30000; /* Rojo oscuro al pasar el ratón para mayor contraste */
->>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
 }

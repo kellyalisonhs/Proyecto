@@ -73,13 +73,13 @@ export async function updatePasswordByEmail(correo_electronico, newPassword) {
   const [result] = await conn.query(strSql, [hashedPassword, correo_electronico]);
   return result;
 }
-<<<<<<< HEAD
+
 export async function deleteUserById(id) {
   const strSql = 'DELETE FROM user WHERE id = ?';
   const [result] = await conn.query(strSql, [id]);
   return result;
 }
-=======
+
 
 /* modelo para Actualizar usuario */
 export async function actualizar(user) {
@@ -115,4 +115,4 @@ export async function eliminar (id)
 
 }
 
->>>>>>> 26b35e7aa1b4833cc21172dc9bbe1827387b232f
+
