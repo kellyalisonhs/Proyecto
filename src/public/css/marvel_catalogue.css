@@ -63,6 +63,9 @@ header {
     font-size: 2rem;
     color: var(--bg-color);
     font-family: fantasy;
+    /* background-color: var(--text-color);
+    text-transform: uppercase;
+    padding: 1px; */
 }
 
 #cart-icon {
@@ -216,6 +219,7 @@ header {
     font-weight: 600;
     text-align: center;
     margin-bottom: 1.8rem;
+    margin-top: 1.2rem;
 }
 
 .shop {
@@ -275,6 +279,66 @@ header {
 
 .add-cart:hover {
     background: hsl(249, 32%, 17%);
+}
+
+/* búsqueda */
+.search {
+    /* display: grid;
+    grid-template-columns: 70% 30%;
+    gap: 2.6rem;
+    align-items: center; */
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+} 
+
+#search-icon {
+    position: relative;
+    font-size: 1.6rem;
+    cursor: pointer;
+}
+
+.search-input {
+    height: 2rem;
+    width: 18rem;
+    background: var(--container-color);
+    font-size: 16px;
+    color: snow;
+}
+
+.list {
+    position: absolute;
+    width: 60%;
+    background-color: #555;
+    color: snow;
+    z-index: 1;
+    width: 18rem;
+    border-radius: 5px;
+}
+
+.autocomplete-items {
+    padding: 0.5em;
+}
+
+.autocomplete-items:hover {
+    background-color: #ddd;
+    color: #171821;
+}
+
+.logout-button {
+    display: flex;
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    width: 12rem;
+    text-align: center;
+    border: none;
+    border-radius: 2rem;
+    background: var(--text-color);
+    color: var(--bg-color);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 /* Responsive design */
