@@ -39,6 +39,7 @@ app.use((req, res, next) => {
 
 app.use(indexRoutes);
 app.use(usersRoutes);
+app.use("/API", usersRoutes);
 
 app.listen(PORT, () => {
   console.log("Servidor ejecutándose en el puerto ${PORT}");
