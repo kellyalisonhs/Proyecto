@@ -1,3 +1,4 @@
+
 /* marvel_catalogue_cart.js */
 /* cart open/close */
 let cartIcon = document.querySelector('#cart-icon');
@@ -24,8 +25,14 @@ const limit = 96;
 
 /* show product boxes (se muestran 96 personajes que se consumen desde la api de marvel)*/
 const marvel = {
-    render: async () => {
-        const urlAPI = `https://gateway.marvel.com:443/v1/public/characters?ts=${ ts }&apikey=${ apikey }&hash=${ hash }&limit=${ limit }`;
+    render: async (searchTerm) => {
+        let urlAPI = `https://gateway.marvel.com:443/v1/public/characters?ts=${ts}&apikey=${apikey}&hash=${hash}&limit=${limit}`;
+        
+        if (searchTerm) {
+            // Si hay un término de búsqueda, ajusta la URL
+            urlAPI += `&nameStartsWith=${searchTerm}`;
+        }
+
         let contentHTML = '';
 
         try {
@@ -35,16 +42,15 @@ const marvel = {
             json.data.results.forEach((element, index) => {
                 contentHTML += `
                     <div class="product-box">
-                        <img src="${ element.thumbnail.path + "." + element.thumbnail.extension }" class="product img">
-                        <h2 class="product-title">${ element.name }</h2>
-                        <i class="bx bx-heart add-cart" data-index="${ index }"></i>
+                        <img src="${element.thumbnail.path + "." + element.thumbnail.extension}" class="product img">
+                        <h2 class="product-title">${element.name}</h2>
+                        <i class="bx bx-heart add-cart" data-index="${index}"></i>
                     </div>
                 `;
             });
 
             showContent.innerHTML = contentHTML;
 
-            // Agregar eventos a los botones de "Agregar al carrito"
             const addToCartButtons = document.querySelectorAll('.add-cart');
             addToCartButtons.forEach((button) => {
                 button.addEventListener('click', addToCartClicked);
@@ -55,7 +61,34 @@ const marvel = {
     }
 };
 
-marvel.render();
+marvel.render(); // Muestra todos los personajes al cargar la página
+
+
+
+/* 'buscar personajes' */
+const searchInput = document.getElementById("search-input");
+const searchButton = document.getElementById("search-button");
+
+function performSearch() {
+    const searchTerm = searchInput.value.trim();
+
+    if (searchTerm.length >= 3) {
+        marvel.render(searchTerm);
+    } else {
+        marvel.render(); // Si el término de búsqueda es corto o vacío, muestra todo el catálogo
+    }
+}
+
+//Eventos para el boton buscar
+searchButton.addEventListener("click", performSearch);
+
+searchInput.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+        performSearch();
+    }
+});
+
+
 
 /* 'agregar al carrito' */
 if(document.readyState == 'loading') {
