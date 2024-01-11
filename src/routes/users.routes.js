@@ -1,28 +1,40 @@
+/* users.routes.js */
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer,  getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar} from "../controllers/users.controllers.js"
-//import { getChangePasswd, getForgotPasswd, getLoginForm, getPasswdRecovery, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, recoveryAnswer, getCatalogue } from "../controllers/users.controllers.js"
+import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue } from "../controllers/users.controllers.js";
 
 const router = Router();
 
-//router.get("/users", getAllUsers);
-//router.post("/login", login);
+// Añadido para pasar el tipo de usuario a todas las vistas
+router.use((req, res, next) => {
+  res.locals.userType = req.user && req.user.usertype;
+  next();
+});
 
 router.get("/change-passwd", getChangePasswd);
 router.get("/forgot-passwd", getForgotPasswd);
 router.get("/login", getLoginForm);
-router.get("/passwd-recovery", getPasswdRecovery);
+
 router.get("/register", getRegisterForm);
 router.get("/users-list", getAllUsers);
 
-router.get("/catalogue", getCatalogue); /* buscador de personajes y tarjetas individules (versión anterior)*/
-router.get("/marvel-characters", getMarvelCatalogue); /* ruta con el catalogo y carrito */
+router.get("/catalogue", getCatalogue); /* buscador de personajes y tarjetas individuales (versión anterior) */
+router.get("/marvel-characters", getMarvelCatalogue); /* ruta con el catálogo y carrito */
+
+/* router.get("/login", function(req, res) {
+  res.sendFile(__dirname + "/public/login.html");
+}); */
 
 router.post('/register', registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-passwd", searchUserByEmail);
-router.post("/passwd-recovery", recoveryAnswer);
 
-router.put("/", ActualizarUser);
-router.delete("/", eliminar);
+// Filtro para verificar la autenticación
+router.get("/users-list", (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.status(401).send("No estás autorizado para acceder a esta ruta.");
+  }
+});
 
 export default router;

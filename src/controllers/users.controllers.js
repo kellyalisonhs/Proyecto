@@ -2,91 +2,107 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import * as userService from '../services/users.service.js';
-import { SignJWT,jwtVerify } from 'jose';
+import { SignJWT, jwtVerify } from 'jose';
 import md5 from 'md5';
-import {conn} from '../../db.js';
+import { conn } from '../../db.js';
 
+/* renders */
+/* Vista Administrador -> lista de usuarios */
+export const getAllUsers = (req, res) => {
+   // Obtén el tipo de usuario desde el token
+   const userType = req.user ? req.user.usertype : null;
 
-export const getAllUsers = (req, res)=>{
-   // consumo de la promesa retornada en el servicio que accede a la BD  
-   console.log(userService.getAllUsers());
-   /* Consumo con async y await */
-   (async () => {      
-      let users = await userService.getAllUsers(); 
-      //res.render("users",{"list":users});
-      res.json(users);    
-      res.render("usersList.hbs")
-    })();
-}
+   // Consumo de la promesa retornada en el servicio que accede a la BD
+   (async () => {
+      let users = await userService.getAllUsers();
+      res.render("users", { "list": users, userType });
+   })();
+};
 
-
+/* form de registro */
 export const getRegisterForm = (req, res) => {
-   res.render("register.hbs")
-}
+   res.render("register.hbs");
+};
 
+/* form: inicio de sesión */
 export const getLoginForm = (req, res) => {
-   res.render("login.hbs")
-}
+   res.render("login.hbs");
+};
 
+/* form: ¿olvidaste tu contraseña? (búsqueda de correo) */
 export const getForgotPasswd = (req, res) => {
-   res.render("forgotPasswd.hbs")
-}
+   res.render("forgotPasswd.hbs");
+};
 
-export const getPasswdRecovery = (req, res) => {
-   res.render("passwdRecovery.hbs")
-}
-
+/* form: cambiar contraseña */
 export const getChangePasswd = (req, res) => {
-   res.render("changePasswd.hbs")
-}
+   res.render("changePasswd.hbs");
+};
 
-export const getCatalogue = async (req, res) => {
-   const {authorization} = req.headers;;
-    if(!authorization) return res.status(401);
-
-    try{
-      const encoder= new TextEncoder();
-      const {payload}= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
-      const { id } =payload.user;
-      const strSql = 'SELECT * FROM user WHERE id = ?';   
-      const [result] = await conn.query(strSql,[id]);      
-      if (result.length === 0) {
-         return res.status(401).send("ID de usuario no válido");
-       }
-      console.log(id)
-     
-      res.render("catalogue.hbs")
-    }catch(err){
-    
-      return res.status(401).send("Token inválido");
-       }
-
-}
-
+/* Vista Operador -> catalogo de personajes de Marvel */
 export const getMarvelCatalogue = (req, res) => {
-   res.render("marvelCatalogue.hbs")
-}
+   res.render("marvelCatalogue.hbs");
+};
 
-
-export const login = (req, res)=>{
-   let {email, passwd} = req.body;
-   
-   console.log(email+' '+passwd);
-
-   if (email && passwd){      
-      (async () => {      
-         auth = await userService.valAuth(email, passwd); 
-         res.send("Usuario registrado");
-       })();            
-   }
-}
-
-/* controlador para registrar usuario */
-export const registerUser = async (req, res) => {
-   const { username, correo_electronico, usertype, password, confirmPassword} = req.body;
+/* controlador: inicio de sesión (perfiles) */
+export const loginUser = async (req, res) => {
+   const { username, password } = req.body;
+   const hashedPassword = md5(password);
 
    try {
-      // llama a la función del servicio para registrar al usuario
+      const user = await userService.loginUser(username, hashedPassword);
+
+      if (!user) {
+         res.status(400).send("Usuario o contraseña incorrectos");
+         return;
+      }
+
+      const userType = await userService.getUserType(username);
+
+      const encoder = new TextEncoder();
+      const jwtConstructor = new SignJWT({ user });
+
+      let template = 'defaultView.hbs'; // Vista predeterminada (no hay)
+
+      if (userType === 'Admin') {
+         template = 'usersList.hbs'; // Vista para administradores
+      } else if (userType === 'Operativo') {
+         template = 'marvelCatalogue.hbs'; // Vista para usuarios operativos
+      }
+
+      const jwt = await jwtConstructor.setProtectedHeader({ alg: 'HS256', tpy: 'JWT' }).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
+
+      res.render(template, { jwt });
+   } catch (error) {
+      res.status(500).send("Error al iniciar sesión: ${error.message}");
+   }
+};
+
+export const getCatalogue = async (req, res) => {
+   const { authorization } = req.headers;
+   if (!authorization) return res.status(401);
+
+   try {
+      const encoder = new TextEncoder();
+      const { payload } = await jwtVerify(authorization, encoder.encode(process.env.JWT_PRIVATE_KEY));
+      const { id } = payload.user;
+      const strSql = 'SELECT * FROM user WHERE id = ?';
+      const [result] = await conn.query(strSql, [id]);
+      if (result.length === 0) {
+         return res.status(401).send("ID de usuario no válido");
+      }
+      console.log(id);
+
+      res.render("marvelCatalogue.hbs");
+   } catch (err) {
+      return res.status(401).send("Token inválido");
+   }
+};
+
+export const registerUser = async (req, res) => {
+   const { username, correo_electronico, usertype, password, confirmPassword } = req.body;
+
+   try {
       await userService.registerUser({
          username,
          correo_electronico,
@@ -95,147 +111,33 @@ export const registerUser = async (req, res) => {
          confirmPassword
       });
 
-      // Redirige al usuario a la ruta "/login" con un mensaje de éxito
-      //res.redirect('/login?success=usuario-registrado-exitosamente');
-      res.json('Usuario Registrado');
-      /* res.send("Usuario registrado exitosamente"); */
+      res.redirect('/login?success=usuario-registrado-exitosamente');
    } catch (error) {
-      // Manejo de errores: Envía un mensaje de error y un código de estado 400
-      res.status(400).send(`Error al registrar usuario: ${error.message}`);
-   }
-};
-
-/* controlador para inicio de sesión */
-
-
-export const loginUserJWT = async (req, res) => {
-   const {username, password } = req.body;
-     try {
-      const {id} = await userService.loginUser(username, password);
-      // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
-      // se agrega un mensaje de inicio existoso en la url
-      const encoder= new TextEncoder();
-      const jwtCostructor= new SignJWT({id});
-      const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-      return res.send({jwt});
-      //res.redirect("/users-list?success=inicio-de-sesion-exitoso");
-   } catch (error) {
-      res.status(400).send(`Error al iniciar sesión: ${error.message}`);
+      res.status(400).send("Error al registrar usuario: ${error.message}");
    }
 };
 
 export const catalogueJWT = async (req, res) => {
-   const {authorization} = req.headers;;
-    if(!authorization) return res.status(401);
+   const { authorization } = req.headers;
+   if (!authorization) return res.status(401);
 
-    try{
-      const encoder= new TextEncoder();
-      const jwtdata= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
-      console.log(jwtdata)
-    }catch(err){
+   try {
+      const encoder = new TextEncoder();
+      const jwtdata = await jwtVerify(authorization, encoder.encode(process.env.JWT_PRIVATE_KEY));
+      console.log(jwtdata);
+   } catch (err) {
       return res.status(401);
-       }
-
+   }
 };
 
-export const loginUser = async (req, res) => {
-   
-   const { username, password } = req.body;
-   const hashedPassword = md5(password);
-   try {
-     const user = await userService.loginUser(username,  hashedPassword);
-     // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
-     const encoder= new TextEncoder();
-       const jwtCostructor= new SignJWT({user});
-       const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-       return res.send({jwt});
-     res.redirect("/users-list");
-   } catch (error) {
-     res.status(400).send(`Error al iniciar sesión: ${error.message}`);
-   }
- };
-
-
-
-/* controlador para búsqueda de usuario por correo electrónico para recuperación de contraseña */
+/* controlador: recuperación de contraseña mediante búsqueda por correo electrónico */
 export const searchUserByEmail = async (req, res) => {
    const { correo_electronico } = req.body;
 
    try {
-      // llamada al servicio para buscar el usuario por correo electrónico
       const user = await userService.searchUserByEmail(correo_electronico);
-
-      // se redirige a el formulario de recuperar contraseña
-      // res.redirect("/passwd-recovery?success=correo-electronico-encontrado");
-       res.render("passwdRecovery", { user });
-      // res.render("/recovery-passwd", { user });
+      res.render("passwdRecovery", { user });
    } catch (error) {
-      // Manejo de errores: Redirige a la página de olvido de contraseña con un mensaje de error
-      res.status(400).send(`Error en la búsqueda: ${error.message}`);
-   }
-};
-
-/* Controlador para validación de la respuesta de recuperación */
-export const recoveryAnswer = async (req, res) => {
-   const { correo_electronico, answer } = req.body;
-
-   try {
-      // llamada al servicio para obtener la pregunta y validar la respuesta
-      const isAnswerValid = await userService.getRecoveryInfoAndValidateAnswer(correo_electronico, answer);
-
-      if (isAnswerValid) {
-         const user = await userService.searchUserByEmail(correo_electronico);
-         // respuesta válida -> redirige al usuario a la página de cambio de contraseña
-         /* res.redirect("/change-passwd"); */
-         res.render("changePasswd", { user });
-      } else {
-         // respuesta incorrecta -> redirige al usuario a la página de recuperación de contraseña con un mensaje de error
-         res.status(400).send("La respuesta proporcionada es incorrecta.");
-      }
-   } catch (error) {
-      // manejo de errores: redirige a la página de recuperación de contraseña con un mensaje de error
-      res.status(400).send(`Error al validar la respuesta: ${error.message}`);
-   }
-}
-
-/* controlador para Actualizar usuario */
-export const ActualizarUser = async (req, res) => {
-   const { id, username, correo_electronico, usertype, password, confirmPassword} = req.body;
-
-   console.log(req.body);
-
-   try {
-      // llama a la función del servicio para registrar al usuario
-      await userService.actualizarUser({
-         id,
-         username,
-         correo_electronico,
-         usertype,
-         password,
-         confirmPassword,
-      });
-
-      // Redirige al usuario a la ruta "/login" con un mensaje de éxito
-      //res.redirect('/login?success=usuario-registrado-exitosamente');
-      res.json('Usuario Actualizado');
-      /* res.send("Usuario registrado exitosamente"); */
-   } catch (error) {
-      // Manejo de errores: Envía un mensaje de error y un código de estado 400
-      res.status(400).send(`Error al actualizar el usuario: ${error.message}`);
-   }
-};
-
-//Controlador para eliminar usuario.
-export const eliminar = async (req, res) => {
-   const { id }=req.params;
-   try {
-      //Llama a la función del servicio para eliminar al usuario
-      await userService.eliminar(id);
-
-      //Envia una respuesta JSON indicando que el usuario fue eliminado exitosamente
-      res.json ({ message: 'Usuario eliminado exitosamente'});
-   } catch (error)    {
-      //Manejo de errores: Envia un mensaje de error y un código de estado 500 (Error del servidor)
-      res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
+      res.status(400).send("Error en la búsqueda: ${error.message}");
    }
 };

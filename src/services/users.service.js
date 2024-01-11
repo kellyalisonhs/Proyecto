@@ -2,7 +2,6 @@
 import * as userModel from '../models/users.model.js';
 import { createHash } from "crypto";
 
-//Servicio para mostrar todos los usuarios
 export const getAllUsers = async()=> {
    let obj, userObjs=[];
    /**
@@ -15,29 +14,14 @@ export const getAllUsers = async()=> {
    if (users) {      
         users.forEach(row=>{
         obj = {
-            id:row.id,
-            name:row.name_u,
-            email:row.email_u
-            
+            id: row.id,
+            name: row.name_u,
+            email: row.email_u
         }
         userObjs.push(obj);                      
       })    
    }
    return userObjs;               
-}
-
-export const valAuth = async(email, passwd)=> {
-   let user = await userModel.getUserByEmail(email);
-   let hash = createHash("md5").update(passwd).digest("hex");
-
-   console.log(user[0].passwd_u);
-   console.log(hash);
-   
-   if (user) {
-      if(user[0].email_u === email && user[0].passwd_u === hash)
-         return true;      
-   }     
-   return false;
 }
 
 /* serivicio para registro de nuevo usuario */
@@ -70,10 +54,6 @@ export const registerUser = async (userData) => {
       const hashedPassword = createHash("md5").update(userData.password).digest("hex");
       userData.password = hashedPassword;
 
-      // Hash para la respuesta antes de almacenarla
-      const hashedAnswer = createHash("md5").update(userData.answer).digest("hex");
-      userData.answer = hashedAnswer;
-
       // Se llama a la función del modelo para crear el usuario
       const result = await userModel.createUser(userData);
       return result;
@@ -83,7 +63,7 @@ export const registerUser = async (userData) => {
    }
 };
 
-export const loginUser = async (username, password) => {
+/* export const loginUser = async (username, password) => {
    // Validaciones previas al inicio de sesión en la base de datos
    if (!username || !password) {
      throw new Error("Todos los campos son obligatorios.");
@@ -96,7 +76,25 @@ export const loginUser = async (username, password) => {
    }
  
    return user[0];
- };
+}; */
+
+export const loginUser = async (username, password) => {
+   try {
+      const user = await userModel.getUserByUsernameAndPassword(username, password);
+      return user.length > 0 ? user[0] : null;
+   } catch (error) {
+      throw new Error('Error al iniciar sesión');
+   }
+};
+
+// Agrega una función para obtener el tipo de usuario
+export const getUserType = async (username) => {
+   try {
+      return await userModel.getUserTypeByUsername(username);
+   } catch (error) {
+      throw new Error('Error al obtener tipo de usuario');
+   }
+};
 
 /* servicio para forgotPasswd (se busca el correo electronico)*/
 export const searchUserByEmail = async (correo_electronico) => {
@@ -142,82 +140,6 @@ export const getRecoveryInfoAndValidateAnswer = async (correo_electronico, answe
       }
    } catch (error) {
       console.error("Error al obtener la pregunta de seguridad y validar la respuesta:", error);
-      throw error;
-   }
-} 
-
-/* serivicio para Actualizar de nuevo usuario */
-export const actualizarUser = async (userData) => {
-   try {
-      console.log("userData:", userData);
-      // Validaciones previas a la actualización en la base de datos
-      if (!userData.id) {
-         throw new Error("Se requiere el ID del usuario para actualizar.");
-      }
-
-      // Verificar si el correo electrónico ya está registrado para otro usuario
-      if (userData.correo_electronico) {
-         const existingUser = await userModel.getUserByEmail(userData.correo_electronico);
-
-         // Si existe un usuario con el mismo correo y es diferente al usuario actual, lanzar un error
-         if (existingUser.length > 0 && existingUser[0].id !== userData.id) {
-            throw new Error("El correo electrónico ya está registrado para otro usuario.");
-         }
-      }
-
-      // Validar que al menos un campo de actualización esté presente
-      if (
-         !userData.id &&
-         !userData.username &&
-         !userData.correo_electronico &&
-         !userData.usertype &&
-         !userData.password
-      ) {
-         throw new Error("Se requiere al menos un campo para actualizar.");
-      }
-
-      // Validar la consistencia de las contraseñas si se proporcionan
-      if (userData.password && userData.confirmPassword && userData.password !== userData.confirmPassword) {
-         throw new Error("Las contraseñas no coinciden.");
-      }
-
-      // Hash para la contraseña antes de almacenarla si se proporciona
-      if (userData.password) {
-         const hashedPassword = createHash("md5").update(userData.password).digest("hex");
-         userData.password = hashedPassword;
-      }
-
-      // Hash para la respuesta antes de almacenarla si se proporciona
-      if (userData.answer) {
-         const hashedAnswer = createHash("md5").update(userData.answer).digest("hex");
-         userData.answer = hashedAnswer;
-      }
-
-      // Se llama a la función del modelo para actualizar el usuario
-      const result = await userModel.actualizar(userData);
-      return result;
-   } catch (error) {
-      console.error("Error al actualizar el usuario:", error);
-      throw error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
-   }
-};
-
-//Eliminar un usuario mediante el ID
-export const eliminar = async (id) => {
-   try{
-      console.log ("ID_usuario", id);
-
-      //Validacion previa a la eliminación en la base de datos.
-      if(!id)
-      {
-         throw new Error("Se requiere el ID del usuario para eliminar.");
-      }
-
-      //Se llama la función del modelo para eliminar el usuario
-      const result = await userModel.eliminar(id);
-      return result;
-   } catch(error) {
-      console.error ("Error al eliminar el usuario: ", error);
       throw error;
    }
 }
