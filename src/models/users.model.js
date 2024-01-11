@@ -68,3 +68,8 @@ export async function updatePasswordByEmail(correo_electronico, newPassword) {
   const [result] = await conn.query(strSql, [hashedPassword, correo_electronico]);
   return result;
 }
+export async function deleteUserById(id) {
+  const strSql = 'DELETE FROM user WHERE id = ?';
+  const [result] = await conn.query(strSql, [id]);
+  return result;
+}

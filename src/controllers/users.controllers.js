@@ -100,39 +100,6 @@ export const registerUser = async (req, res) => {
 /* controlador para inicio de sesión */
 
 
-export const loginUserJWT = async (req, res) => {
-   const {username, password } = req.body;
-     try {
-      const {id} = await userService.loginUser(username, password);
-      // si el usuario existe y la contraseña es correcta, redirige a la vista "/users-list"
-      // se agrega un mensaje de inicio existoso en la url
-      const encoder= new TextEncoder();
-      const jwtCostructor= new SignJWT({id});
-      const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-      return res.send({jwt});
-      //res.redirect("/users-list?success=inicio-de-sesion-exitoso");
-   } catch (error) {
-      res.status(400).send(`Error al iniciar sesión: ${error.message}`);
-   }
-};
-export const catalogueJWT = async (req, res) => {
-   const {authorization} = req.headers;;
-    if(!authorization) return res.status(401);
-
-    try{
-      const encoder= new TextEncoder();
-      const jwtdata= await jwtVerify(authorization,encoder.encode(process.env.JWT_PRIVATE_KEY))
-      console.log(jwtdata)
-    }catch(err){
-      return res.status(401);
-       }
-
-};
-
-
-
-
-
 export const loginUser = async (req, res) => {
    
    const { username, password } = req.body;
@@ -143,8 +110,8 @@ export const loginUser = async (req, res) => {
      const encoder= new TextEncoder();
        const jwtCostructor= new SignJWT({user});
        const jwt= await jwtCostructor.setProtectedHeader({alg:'HS256', tpy:'JWT'}).setIssuedAt().setExpirationTime('1h').sign(encoder.encode(process.env.JWT_PRIVATE_KEY));
-       return res.send({jwt});
-     res.redirect("/users-list");
+       //return res.send({jwt});
+       res.render("catalogue.hbs")
    } catch (error) {
      res.status(400).send(`Error al iniciar sesión: ${error.message}`);
    }
@@ -192,3 +159,17 @@ export const recoveryAnswer = async (req, res) => {
       res.status(400).send(`Error al validar la respuesta: ${error.message}`);
    }
 }
+export const deleteUser = async (req, res) => {
+   const userId = req.params.id;
+ 
+   try {
+     await userService.deleteUserById(userId);
+     res.send('Usuario eliminado correctamente.');
+   } catch (error) {
+     console.error(error);
+     res.status(500).send('Error interno del servidor');
+   }
+ };
+ export const deleteUserById = async (userId) => {
+   return await userModel.deleteUserById(userId);
+ }
