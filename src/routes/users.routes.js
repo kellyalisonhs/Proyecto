@@ -1,6 +1,6 @@
 /* users.routes.js */
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue } from "../controllers/users.controllers.js";
+import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar } from "../controllers/users.controllers.js";
 
 const router = Router();
 
@@ -27,6 +27,9 @@ router.get("/marvel-characters", getMarvelCatalogue); /* ruta con el catálogo y
 router.post('/register', registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-passwd", searchUserByEmail);
+
+router.put("/actualizar", ActualizarUser);
+router.delete("/eliminar", eliminar);
 
 // Filtro para verificar la autenticación
 router.get("/users-list", (req, res, next) => {

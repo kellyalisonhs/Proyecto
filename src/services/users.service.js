@@ -143,3 +143,79 @@ export const getRecoveryInfoAndValidateAnswer = async (correo_electronico, answe
       throw error;
    }
 }
+
+/* serivicio para Actualizar de nuevo usuario */
+export const actualizarUser = async (userData) => {
+   try {
+      console.log("userData:", userData);
+      // Validaciones previas a la actualización en la base de datos
+      if (!userData.id) {
+         throw new Error("Se requiere el ID del usuario para actualizar.");
+      }
+
+      // Verificar si el correo electrónico ya está registrado para otro usuario
+      if (userData.correo_electronico) {
+         const existingUser = await userModel.getUserByEmail(userData.correo_electronico);
+
+         // Si existe un usuario con el mismo correo y es diferente al usuario actual, lanzar un error
+         if (existingUser.length > 0 && existingUser[0].id !== userData.id) {
+            throw new Error("El correo electrónico ya está registrado para otro usuario.");
+         }
+      }
+
+      // Validar que al menos un campo de actualización esté presente
+      if (
+         !userData.id &&
+         !userData.username &&
+         !userData.correo_electronico &&
+         !userData.usertype &&
+         !userData.password
+      ) {
+         throw new Error("Se requiere al menos un campo para actualizar.");
+      }
+
+      // Validar la consistencia de las contraseñas si se proporcionan
+      if (userData.password && userData.confirmPassword && userData.password !== userData.confirmPassword) {
+         throw new Error("Las contraseñas no coinciden.");
+      }
+
+      // Hash para la contraseña antes de almacenarla si se proporciona
+      if (userData.password) {
+         const hashedPassword = createHash("md5").update(userData.password).digest("hex");
+         userData.password = hashedPassword;
+      }
+
+      // Hash para la respuesta antes de almacenarla si se proporciona
+      if (userData.answer) {
+         const hashedAnswer = createHash("md5").update(userData.answer).digest("hex");
+         userData.answer = hashedAnswer;
+      }
+
+      // Se llama a la función del modelo para actualizar el usuario
+      const result = await userModel.actualizar(userData);
+      return result;
+   } catch (error) {
+      console.error("Error al actualizar el usuario:", error);
+      throw error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
+   }
+};
+
+//Eliminar un usuario mediante el ID
+export const eliminar = async (id) => {
+   try{
+      console.log ("ID_usuario", id);
+
+      //Validacion previa a la eliminación en la base de datos.
+      if(!id)
+      {
+         throw new Error("Se requiere el ID del usuario para eliminar.");
+      }
+
+      //Se llama la función del modelo para eliminar el usuario
+      const result = await userModel.eliminar(id);
+      return result;
+   } catch(error) {
+      console.error ("Error al eliminar el usuario: ", error);
+      throw error;
+   }
+}
