@@ -1,45 +1,45 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0c0c0c; 
-    background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL._AC_UF894,1000_QL80_.jpg');
-    background-size: cover;
-    background-position: center;
-    font-family: 'Bangers', cursive; 
-    color: #fff; 
-  }
-  
-  .wrapper {
-    position: relative;
-    max-width: 470px;
-    width: 100%;
-    border-radius: 12px;
-    padding: 30px 30px 120px; 
-    background: rgba(64, 112, 244, 0.7); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-  }
-  
-  .Titulo {
-    font-size: 48px; 
-    text-align: center;
-    color: #ff69b4;
-    font-weight: 800;
-    margin-bottom: 20px;
-  }
-  
-  .usuarios-box {
-    background-color: #fff; 
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0c0c0c; 
+  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL._AC_UF894,1000_QL80_.jpg');
+  background-size: cover;
+  background-position: center;
+  font-family: 'Bangers', cursive; 
+  color: #fff; 
+}
+
+.wrapper {
+  position: relative;
+  max-width: 470px;
+  width: 100%;
+  border-radius: 12px;
+  padding: 30px 30px 120px; 
+  background: rgba(64, 112, 244, 0.7); 
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.Titulo {
+  font-size: 48px; 
+  text-align: center;
+  color: #ff69b4;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.usuarios-box {
+  background-color: #fff; 
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}

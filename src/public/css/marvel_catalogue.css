@@ -304,6 +304,7 @@ header {
     background: var(--container-color);
     font-size: 16px;
     color: snow;
+    border-radius: 5px;
 }
 
 .list {
@@ -330,7 +331,7 @@ header {
     height: 45px;
     justify-content: center;
     align-items: center;
-    width: 12rem;
+    width: 10rem;
     text-align: center;
     border: none;
     border-radius: 2rem;

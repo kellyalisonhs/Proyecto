@@ -1,4 +1,3 @@
-/* users.controllers.js */
 import dotenv from 'dotenv';
 dotenv.config();
 import * as userService from '../services/users.service.js';
@@ -11,11 +10,14 @@ import { conn } from '../../db.js';
 export const getAllUsers = (req, res) => {
    // Obtén el tipo de usuario desde el token
    const userType = req.user ? req.user.usertype : null;
+   console.log(userService.getAllUsers());
 
    // Consumo de la promesa retornada en el servicio que accede a la BD
    (async () => {
       let users = await userService.getAllUsers();
       res.render("users", { "list": users, userType });
+      res.render("usersList.hbs");
+      //res.json(users);
    })();
 };
 
@@ -110,8 +112,8 @@ export const registerUser = async (req, res) => {
          password,
          confirmPassword
       });
-
       res.redirect('/login?success=usuario-registrado-exitosamente');
+      res.json('Usuario Registrado');
    } catch (error) {
       res.status(400).send("Error al registrar usuario: ${error.message}");
    }
@@ -140,4 +142,43 @@ export const searchUserByEmail = async (req, res) => {
    } catch (error) {
       res.status(400).send("Error en la búsqueda: ${error.message}");
    }
+};
+
+/* controlador para Actualizar usuario */
+export const ActualizarUser = async (req, res) => {
+   const { id, username, correo_electronico, password, usertype} = req.body;
+
+   console.log(req.body);
+
+   try {
+      // llama a la función del servicio para registrar al usuario
+      await userService.actualizarUser({
+         id,
+         username,
+         correo_electronico,
+         usertype,
+         password
+      });
+
+      // Redirige al usuario a la ruta "/login" con un mensaje de éxito
+      res.json('Usuario Actualizado');
+   } catch (error) {
+      // Manejo de errores: Envía un mensaje de error y un código de estado 400
+      res.status(400).send("Error al actualizar el usuario: ${error.message}");
+   }
+};
+
+//Controlador para eliminar usuario.
+export const eliminar = async (req, res) => {
+   const { id } = req.body;
+   try {
+      //Llama a la función del servicio para eliminar al usuario
+      await userService.eliminar(id);
+
+      //Envia una respuesta JSON indicando que el usuario fue eliminado exitosamente
+      res.json ({ message: 'Usuario eliminado exitosamente'});
+   } catch (error) {
+      //Manejo de errores: Envia un mensaje de error y un código de estado 500 (Error del servidor)
+      res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
+   }
 };

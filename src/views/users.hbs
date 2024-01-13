@@ -1,45 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styleList.css">
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: black; /* Cambia el color del texto a negro */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="css/Proyecto.css">
 
-    #title {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    #wrapper {
-      margin-top: 20px;
-    }
-
-    .eliminar-btn {
-      cursor: pointer;
-      background-color: #ff6347;
-      color: white;
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-    }
-  </style>
 </head>
-<body>
+<body>  
+<div class="wrapper">
+<h1 id="title-table">{{title}}</h1>
 
-  <h1 id="title">Lista de usuarios registrados</h1>
+<table id="usuariosList" >
+  <thead>
+    <th>Nombre</th><th>Correo</th>
+  </thead>  
+  </tr>
+{{#each list}}
+  <tr>      
+     <td>{{name}}</td><td>{{email}}</td> 
+       <td>
+    <form action="/users-list/{{id}}" method="POST">
+      <button type="submit" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</button>
+    </form>
+  </td>
+  </tr>   
+{{/each}}
+</table>
 
+<<<<<<< HEAD
+<div class="inicio-link">
+            
+                <a class="return-link"href="login">Inicio de Sesion</a>
+
+            </div>
+        </div>
+
+</div>
+=======
   <div id="wrapper">
     <div class="usuarios-box">
       <table id="lista">
         <thead>
           <tr>
+            <th>ID</th>
             <th>Usuario</th>
             <th>Correo electrónico</th>
             <th>Acciones</th>
@@ -48,10 +52,11 @@
         
         {{#each list}}
         
-        <tr>      
+        <tr>  
+          <td>{{id}}</td>   
           <td>{{name}}</td>
           <td>{{email}}</td>
-          <td><button class="eliminar-btn" onclick="eliminarUsuario('{{name_u}}')">Eliminar</button></td>
+          <td><button class="eliminar-btn" onclick="eliminar('{{id}}')">Eliminar</button></td> 
         </tr>
         {{/each}}
       </table>
