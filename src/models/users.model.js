@@ -1,3 +1,4 @@
+/* users.model.js */
 import {conn} from '../../db.js';
 import { createHash } from 'crypto';
 
@@ -104,4 +105,4 @@ export async function eliminar (id)
     console.error("Error en la consulta SQL:", error);
     throw error; // Propaga el error para que sea manejado en el servicio
   }
-};
+}

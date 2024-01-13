@@ -1,8 +1,10 @@
+/* marvel_catalogue_cart.js */
 /* cart open/close */
 let cartIcon = document.querySelector('#cart-icon');
 let cart = document.querySelector('.cart');
 let closeCart = document.querySelector('#close-cart');
 let showContent = document.querySelector('#show-boxes');
+let searchIcon = document.querySelector('#search-icon');
 
 /* Open cart */
 cartIcon.onclick = () => {
@@ -176,7 +178,7 @@ function saveCartItems() {
     }
 
     // Guardar en localStorage
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //localStorage.setItem("cartItems", JSON.stringify(cartItems));
 }
 
 /* quantity in cart icon */
@@ -189,7 +191,7 @@ function updateCartIcon() {
 }
 
 // Cargar elementos del carrito al iniciar la página
-document.addEventListener("DOMContentLoaded", loadCartItems);
+//document.addEventListener("DOMContentLoaded", loadCartItems);
 
 /* Configurar eventos para los nuevos elementos del carrito */
 function configureCartEvents() {
@@ -204,7 +206,7 @@ function configureCartEvents() {
     });
 }
 
-function loadCartItems() {
+/* function loadCartItems() {
     var cartItems = localStorage.getItem('cartItems');
     if (cartItems) {
         cartItems = JSON.parse(cartItems);
@@ -219,4 +221,83 @@ function loadCartItems() {
     configureCartEvents();
     // Actualizar el ícono del carrito después de cargar los elementos
     updateCartIcon();
+} */
+
+/* búsqueda */
+let inputS = document.getElementById("input-box");
+let button = document.getElementById("search-icon");
+let listContainer = document.querySelector(".list");
+
+function displayWords(value) {
+    inputS.value = value;
+    removeElements();
 }
+
+function removeElements() {
+    listContainer.innerHTML = "";
+}
+
+inputS.addEventListener("keyup", async () => {
+    removeElements();
+    if (inputS.value.length < 1) {
+        return false;
+    }
+
+    const url = `https://gateway.marvel.com:443/v1/public/characters?ts=${ ts }&apikey=${ apikey }&hash=${ hash }&nameStartsWith=${ inputS.value }`;
+
+    const response = await fetch(url);
+    const jsonData = await response.json();
+
+    jsonData.data["results"].forEach((result) => {
+        let name = result.name;
+        let div = document.createElement("div");
+        div.style.cursor = "pointer";
+        div.classList.add("autocomplete-items");
+        div.setAttribute("onclick", "displayWords('" + name + "')");
+        let word = "<b>" + name.substr(0, inputS.value.length) + "</b>";
+        word += name.substr(inputS.value.length);
+        `div.innerHTML = <p class="item">${ word }</p>`;
+        listContainer.appendChild(div);
+    });
+});
+
+button.addEventListener(
+    "click",
+    (getRsult = async () => {
+        if (inputS.value.trim().length < 1) {
+        alert("Input cannot be blank");
+        }
+
+        const urlAPI = `https://gateway.marvel.com:443/v1/public/characters?ts=${ ts }&apikey=${ apikey }&hash=${ hash }&limit=${ limit }`;
+        let contentHTML = '';
+
+        try {
+            const response = await fetch(urlAPI);
+            const json = await response.json();
+
+            json.data.results.forEach((element, index) => {
+                contentHTML += `
+                    <div class="product-box">
+                        <img src="${ element.thumbnail.path + "." + element.thumbnail.extension }" class="product img">
+                        <h2 class="product-title">${ element.name }</h2>
+                        <i class="bx bx-heart add-cart" data-index="${ index }"></i>
+                    </div>
+                `;
+            });
+
+            showContent.innerHTML = contentHTML;
+
+            // Agregar eventos a los botones de "Agregar al carrito"
+            const addToCartButtons = document.querySelectorAll('.add-cart');
+            addToCartButtons.forEach((button) => {
+                button.addEventListener('click', addToCartClicked);
+            });
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    })
+);
+
+window.onload = () => {
+    getRsult();
+};

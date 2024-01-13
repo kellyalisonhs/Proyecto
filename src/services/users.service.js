@@ -1,3 +1,4 @@
+/* users.service.js */
 import * as userModel from '../models/users.model.js';
 import { createHash } from "crypto";
 

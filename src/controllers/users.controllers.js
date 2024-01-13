@@ -1,3 +1,4 @@
+/* users.controllers.js */
 import dotenv from 'dotenv';
 dotenv.config();
 import * as userService from '../services/users.service.js';
@@ -170,14 +171,14 @@ export const ActualizarUser = async (req, res) => {
 
 //Controlador para eliminar usuario.
 export const eliminar = async (req, res) => {
-   const { id } = req.body;
+   const { id }=req.body;
    try {
       //Llama a la función del servicio para eliminar al usuario
       await userService.eliminar(id);
 
       //Envia una respuesta JSON indicando que el usuario fue eliminado exitosamente
       res.json ({ message: 'Usuario eliminado exitosamente'});
-   } catch (error) {
+   } catch (error)    {
       //Manejo de errores: Envia un mensaje de error y un código de estado 500 (Error del servidor)
       res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
    }
