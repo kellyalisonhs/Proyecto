@@ -16,7 +16,7 @@ export const getAllUsers = (req, res) => {
    // Consumo de la promesa retornada en el servicio que accede a la BD
    (async () => {
       let users = await userService.getAllUsers();
-      res.render("users", { "list": users, userType });
+      //res.render("users", { "list": users, userType });
       res.render("usersList.hbs");
       //res.json(users);
    })();
