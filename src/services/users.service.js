@@ -23,11 +23,9 @@ export const getAllUsers = async()=> {
    }
    return userObjs;               
 }
-
-/* serivicio para registro de nuevo usuario */
 export const registerUser = async (userData) => {
    try {
-      // Validaciones previas al registro en la base de datos
+     // Validaciones previas al registro en la base de datos
       if (
          !userData.username ||
          !userData.correo_electronico ||
@@ -37,32 +35,43 @@ export const registerUser = async (userData) => {
       ) {
          throw new Error("Todos los campos son obligatorios.");
       }
-
-      const existingUser = await userModel.getUserByEmail(userData.correo_electronico);
+   
+      if (userData.password.length < 5) {
+         throw new Error("La contraseña debe tener al menos 5 caracteres.");
+      }
+   
+      if (!/^([a-zA-Z0-9_.+-]+@gmail\.com)$/.test(userData.correo_electronico)) {
+         throw new Error("El correo electrónico debe tener la terminación gmail.");
+      }
       
-      console.log("Existing User:", existingUser); // Añadido para depuración
-
-      if (existingUser.length > 0) {
-         throw new Error("El correo electrónico ya está registrado.");
+      // Validación de registro de usuario existente
+      const existingUserEmail = await userModel.getUserByEmail(userData.correo_electronico);
+   
+      if (existingUserEmail.length > 0) {
+         if (existingUserEmail[0].username === userData.username) {
+            throw new Error("El correo electrónico ya está registrado.");
+         }
       }
-
-      if (userData.password !== userData.confirmPassword) {
-         throw new Error("Las contraseñas no coinciden.");
+   
+      // Validación de registro de usuario existente con el mismo nombre de usuario
+      const existingUsername = await userModel.getUserByUsername(userData.username);
+   
+      if (existingUsername.length > 0) {
+         throw new Error("El nombre de usuario ya está registrado.");
       }
-
+ 
       // Hash para la contraseña antes de almacenarla
       const hashedPassword = createHash("md5").update(userData.password).digest("hex");
       userData.password = hashedPassword;
-
+   
       // Se llama a la función del modelo para crear el usuario
       const result = await userModel.createUser(userData);
       return result;
-   } catch (error) {
-      console.error("Error al registrar usuario:", error);
-      throw error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
-   }
-};
-
+      } catch (error) {
+         console.error("Error al registrar usuario:", error);
+         throw new Error; // Propaga el error para que pueda ser manejado en el controlador o donde sea que se llame a esta función
+      }
+ };
 /* export const loginUser = async (username, password) => {
    // Validaciones previas al inicio de sesión en la base de datos
    if (!username || !password) {
