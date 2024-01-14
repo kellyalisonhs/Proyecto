@@ -129,3 +129,12 @@ button,
 .button-primary:hover {
   background: #b30000; /* Rojo oscuro al pasar el ratón para mayor contraste */
 }
+p {
+  background: whitesmoke;
+  color: #202020;
+  width: 32rem;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1.3rem;
+  font-weight: 600;
+}
