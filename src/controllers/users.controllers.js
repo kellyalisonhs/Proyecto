@@ -56,7 +56,8 @@ export const loginUser = async (req, res) => {
       const user = await userService.loginUser(username, hashedPassword);
 
       if (!user) {
-         res.status(400).send("Usuario o contraseña incorrectos");
+         const errorMessage = "Usuario o contraseña incorrectos";
+         res.render('login', { errorMessage });
          return;
       }
 
@@ -77,7 +78,9 @@ export const loginUser = async (req, res) => {
 
       res.render(template, { jwt });
    } catch (error) {
-      res.status(500).send("Error al iniciar sesión: ${error.message}");
+      const errorMessage = `Error al iniciar sesión: ${ error.message }`;
+      console.log(`Error en el inicio de sesión: ${ error.message }`);
+      res.render('/login', { errorMessage });
    }
 };
 
@@ -113,10 +116,15 @@ export const registerUser = async (req, res) => {
          password,
          confirmPassword
       });
-      res.redirect('/login?success=usuario-registrado-exitosamente');
-      res.json('Usuario Registrado');
+    
+      const successMessage = "Usuario registrado con éxito";
+      console.log("Usuario registrado con éxito");
+      res.render('login', { successMessage });
+
    } catch (error) {
-      res.status(400).send("Error al registrar usuario: ${error.message}");
+      const errorMessage = `${ error.message }`;
+      console.log(`Error al registrar usuario: ${ error }`);
+      res.render('register', { errorMessage });
    }
 };
 

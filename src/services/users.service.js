@@ -200,12 +200,6 @@ export const actualizarUser = async (userData) => {
          userData.password = hashedPassword;
       }
 
-      // Hash para la respuesta antes de almacenarla si se proporciona
-      if (userData.answer) {
-         const hashedAnswer = createHash("md5").update(userData.answer).digest("hex");
-         userData.answer = hashedAnswer;
-      }
-
       // Se llama a la función del modelo para actualizar el usuario
       const result = await userModel.actualizar(userData);
       return result;
