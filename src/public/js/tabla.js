@@ -83,7 +83,7 @@ function getAllUsers() {
 
                 data.forEach(user => {
                     const row = document.createElement('tr');
-                    row.innerHTML = `<td>${user.id}</td><td>${user.name_u}</td><td>${user.email_u}</td><td><button class="eliminar-btn" onclick="eliminarUsuario(${user.id})">Eliminar</button></td>`;
+                    row.innerHTML = `<td>${user.id}</td><td>${user.name_u}</td><td>${user.email_u}</td><td>${user.type_u}</td><td><button class="eliminar-btn" onclick="eliminarUsuario(${user.id})">Eliminar</button></td>`;
                     usuariosBody.appendChild(row);
                 });
             } else {
