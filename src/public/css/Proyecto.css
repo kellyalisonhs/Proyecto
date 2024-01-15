@@ -8,17 +8,26 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+p {
+  background: whitesmoke;
+  color: #202020;
+  width: 32rem;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1.3rem;
+  font-weight: 600;
+}
 body {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #0c0c0c; /* Fondo oscuro para mejorar el contraste */
-  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL.AC_UF894,1000_QL80.jpg');
+  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL._AC_UF894,1000_QL80_.jpg');
   background-size: cover;
   background-position: center;
   font-family: 'Bangers', cursive; /* Cambio de tipo de letra a una de estilo de cómic */
+  color: #fff; /* Texto blanco para mayor contraste */
 }
 
 .wrapper {
@@ -128,35 +137,3 @@ button,
 .button-primary:hover {
   background: #b30000; /* Rojo oscuro al pasar el ratón para mayor contraste */
 }
-
-p {
-  background: whitesmoke;
-  color: #202020;
-  width: 32rem;
-  text-align: center;
-  border-radius: 5px;
-  padding: 1.3rem;
-  font-weight: 600;
-}
-
-.btn-delete {
-  height: 50px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  border-radius: 8px;
-  width: 6rem;
-  color: #fff;
-  background: #ed1d24;
-}
-
-.return-link {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-}
-
-/* .table {
-
-} */
