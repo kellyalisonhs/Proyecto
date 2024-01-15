@@ -4,7 +4,7 @@ dotenv.config();
 import * as userService from '../services/users.service.js';
 import { SignJWT, jwtVerify } from 'jose';
 import md5 from 'md5';
-import { conn } from '../../db.js';
+import { conn } from '../db.js';
 
 /* renders */
 /* Vista Administrador -> lista de usuarios */

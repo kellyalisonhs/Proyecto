@@ -1,5 +1,5 @@
 /* users.model.js */
-import {conn} from '../../db.js';
+import {conn} from '../db.js';
 import { createHash } from 'crypto';
 
 export async function getAllUsers(){
