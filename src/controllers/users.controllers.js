@@ -47,6 +47,11 @@ export const getMarvelCatalogue = (req, res) => {
    res.render("marvelCatalogue.hbs");
 };
 
+/*Vista admi -> actualizacion del usuario */
+export const getActulizar = (req, res) => {
+   res.render("actualizar_usuario.hbs");
+};
+
 /* controlador: inicio de sesión (perfiles) */
 export const loginUser = async (req, res) => {
    const { username, password } = req.body;
@@ -78,8 +83,8 @@ export const loginUser = async (req, res) => {
 
       res.render(template, { jwt });
    } catch (error) {
-      const errorMessage = `Error al iniciar sesión: ${ error.message }`;
-      console.log(`Error en el inicio de sesión: ${ error.message }`);
+      const errorMessage = "Error al iniciar sesión: ${ error.message }";
+      console.log("Error en el inicio de sesión: ${ error.message }");
       res.render('/login', { errorMessage });
    }
 };
@@ -122,8 +127,8 @@ export const registerUser = async (req, res) => {
       res.render('login', { successMessage });
 
    } catch (error) {
-      const errorMessage = `${ error.message }`;
-      console.log(`Error al registrar usuario: ${ error }`);
+      const errorMessage = "${ error.message }";
+      console.log("Error al registrar usuario: ${ error }");
       res.render('register', { errorMessage });
    }
 };
@@ -147,15 +152,21 @@ export const searchUserByEmail = async (req, res) => {
 
    try {
       const user = await userService.searchUserByEmail(correo_electronico);
-      res.render("passwdRecovery", { user });
+      /* res.render("passwdRecovery", { user }); */
+      const successMessage = "El correo electrónico existe en nuestra base de datos";
+      console.log("Correo electrónico enecontrado");
+      res.render('changePasswd', { user, successMessage });
    } catch (error) {
-      res.status(400).send("Error en la búsqueda: ${error.message}");
+      /* res.status(400).send("Error en la búsqueda: ${error.message}"); */
+      const errorMessage = `${ error.message }`;
+      console.log(`Error al registrar usuario: ${ error }`);
+      res.render('forgotPasswd', { errorMessage });
    }
 };
 
 /* controlador para Actualizar usuario */
 export const ActualizarUser = async (req, res) => {
-   const { id, username, correo_electronico, password, usertype} = req.body;
+   const { id, username, correo_electronico, usertype} = req.body;
 
    console.log(req.body);
 
@@ -166,12 +177,16 @@ export const ActualizarUser = async (req, res) => {
          username,
          correo_electronico,
          usertype,
-         password
       });
-
+      
+      const successMessage = "Usuario actualizado con exito";
       // Redirige al usuario a la ruta "/login" con un mensaje de éxito
       res.json('Usuario Actualizado');
+      res.render("users-list.hbs", { successMessage });
    } catch (error) {
+      const errorMessage = "${ error.message }";
+      console.log("Error al actualizar usuario: ${ error }");
+      res.render('actualizar', { errorMessage });
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
       res.status(400).send("Error al actualizar el usuario: ${error.message}");
    }
@@ -190,4 +205,13 @@ export const eliminar = async (req, res) => {
       //Manejo de errores: Envia un mensaje de error y un código de estado 500 (Error del servidor)
       res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
    }
+};
+
+// Agregar una nueva ruta o endpoint para cerrar sesión
+export const logoutUser = (req, res) => {
+   const successMessage = "Ha cerrado sesión";
+   console.log("Ha cerrado sesión");
+   // Redirigir al usuario a la página de inicio de sesión
+   res.render('login', { successMessage });
+   /* res.redirect('/login'); */
 };

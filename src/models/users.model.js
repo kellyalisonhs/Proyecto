@@ -76,15 +76,12 @@ export async function updatePasswordByEmail(correo_electronico, newPassword) {
 
 /* modelo para Actualizar usuario */
 export async function actualizar(user) {
-  const { id, username, correo_electronico, usertype, password} = user;
+  const { id, username, correo_electronico, usertype} = user;
   
-  // Hash de la contraseña proporcionada antes de almacenarla en la base de datos
-  const hashedPassword = createHash('md5').update(password).digest('hex');
-  
-  const strSql = 'UPDATE user SET name_u = ?, email_u = ?, type_u = ?, passwd_u = ? WHERE id = ?';
+  const strSql = 'UPDATE user SET name_u = ?, email_u = ?, type_u = ? WHERE id = ?';
   // para manejar errores en la consulta
   try {
-    const [result] = await conn.query(strSql, [username, correo_electronico, usertype, password, id]);
+    const [result] = await conn.query(strSql, [username, correo_electronico, usertype, id]);
     console.log(result); // loguea el resultado de la consulta
     return result;
   } catch (error) {
