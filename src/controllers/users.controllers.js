@@ -206,3 +206,12 @@ export const eliminar = async (req, res) => {
       res.status(500).json ({error: 'Error al eliminar el usuario: ${error.message}'});
    }
 };
+
+// Agregar una nueva ruta o endpoint para cerrar sesión
+export const logoutUser = (req, res) => {
+   const successMessage = "Ha cerrado sesión";
+   console.log("Ha cerrado sesión");
+   // Redirigir al usuario a la página de inicio de sesión
+   res.render('login', { successMessage });
+   /* res.redirect('/login'); */
+};
