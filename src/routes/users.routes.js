@@ -29,8 +29,9 @@ router.get("/cerrar-sesion", logoutUser);
 router.post('/register', registerUser);
 router.post("/login", loginUser);
 router.post("/forgot-passwd", searchUserByEmail);
+router.post("/actualizar", ActualizarUser);
 
-router.put("/actualizar", ActualizarUser);
+//router.put("/actualizar", ActualizarUser);
 router.delete("/eliminar", eliminar);
 
 // Filtro para verificar la autenticación
