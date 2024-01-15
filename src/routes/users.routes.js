@@ -1,6 +1,6 @@
 /* users.routes.js */
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar, getActulizar } from "../controllers/users.controllers.js";
+import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar, getActulizar, logoutUser } from "../controllers/users.controllers.js";
 
 const router = Router();
 
@@ -23,6 +23,8 @@ router.get("/actualizar", getActulizar) //Formulario para actulizar usuario.
 /* router.get("/login", function(req, res) {
   res.sendFile(__dirname + "/public/login.html");
 }); */
+
+router.get("/cerrar-sesion", logoutUser);
 
 router.post('/register', registerUser);
 router.post("/login", loginUser);
