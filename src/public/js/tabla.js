@@ -24,14 +24,17 @@ function getAllUsers(a) {
                 col2.innerHTML = `${objeto.email}`;
 
                 // link para eliminar usuario (each row)
-                let eliminarLink = document.createElement('a');
-                eliminarLink.href = "#";
-                eliminarLink.innerHTML = "Eliminar usuario";
-                eliminarLink.addEventListener('click', function(e) {
+                let eliminarButton = document.createElement('button');
+                eliminarButton.href = "buttoneliminar";
+                eliminarButton.classList.add('eliminar-button');
+                eliminarButton.innerHTML = "Eliminar usuario";
+                eliminarButton.addEventListener('click', function(e) {
                     e.preventDefault();
                     eliminarUsuario(objeto.id); // se llama a la función de eliminar usuario con el id del usuario
                 });
-                col3.appendChild(eliminarLink);
+
+                document.body.appendChild(eliminarButton);
+                col3.appendChild(eliminarButton);
 
                 row.appendChild(col1);
                 row.appendChild(col2);
@@ -41,6 +44,7 @@ function getAllUsers(a) {
         }
     };
     http.send();
+    
 }
 
 /* eliminar usuario */
