@@ -1,8 +1,8 @@
 let listaUsuarios = [];
 let error = 0;
-
+/*
 function getAllUsers(a) {
-    const url = 'usuarios.json';
+    const url = 'scr/allUsers';
     const http = new XMLHttpRequest();  // Objeto para configurar la petición
     http.open('GET', url); // método GET para obtener el archivo
     http.onreadystatechange = function () { // función que procesa la respuesta
@@ -15,7 +15,7 @@ function getAllUsers(a) {
                 console.log(listaUsuarios);
 
             /* Se añade título de la tabla */
-            listaUsuarios.forEach(objeto => {           
+            /*listaUsuarios.forEach(objeto => {           
                 row = document.createElement('tr');     
                 col1 = document.createElement('td');
                 col2 = document.createElement('td');
@@ -25,7 +25,7 @@ function getAllUsers(a) {
 
                 // link para eliminar usuario (each row)
                 let eliminarButton = document.createElement('button');
-                eliminarButton.href = "buttoneliminar";
+                eliminarButton.href = "#";
                 eliminarButton.classList.add('eliminar-button');
                 eliminarButton.innerHTML = "Eliminar usuario";
                 eliminarButton.addEventListener('click', function(e) {
@@ -33,7 +33,7 @@ function getAllUsers(a) {
                     eliminarUsuario(objeto.id); // se llama a la función de eliminar usuario con el id del usuario
                 });
 
-                document.body.appendChild(eliminarButton);
+                
                 col3.appendChild(eliminarButton);
 
                 row.appendChild(col1);
@@ -46,31 +46,79 @@ function getAllUsers(a) {
     http.send();
     
 }
+*/
 
-/* eliminar usuario */
-async function eliminarUsuario(id) {
-    if (confirm('¿Está seguro de que desea eliminar a este usuario?')) {
-        const response = await fetch('usuarios.json');
-        const usuarios = await response.json();
-        const usuarioEliminado = usuarios.find((usuario) => usuario.id === id);
 
-        if (usuarioEliminado) {
-            const indiceUsuario = usuarios.indexOf(usuarioEliminado);
-            usuarios.splice(indiceUsuario, 1);
-            await fetch('usuarios.json', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(usuarios),
+/*function getAllUsers() {
+    fetch('http://localhost:3000/allUsers')
+        .then(response => response.json())
+        .then(data => {
+            // Manipula el DOM para mostrar la lista de usuarios
+            const usuariosList= document.getElementById('listaUsuarios');
+            usuariosList.innerHTML = '';
+
+            data.forEach(usuario => {
+                const usuariotable = document.createElement('table');
+                usuariotable.textContent = `ID: ${usuario.id}, Nombre: ${usuario.name}, Email: ${usuario.email}`;
+                usuariosList.appendChild(usuarioDiv);
             });
-            location.reload();
-            alert('Usuario eliminado');
-        } else {
-            console.error('Usuario no encontrado');
-        }
+        })
+        .catch(error => {
+            console.error('Error al obtener usuarios:', error.message);
+        });
+}
+*/
+
+document.addEventListener('DOMContentLoaded', function () {
+    getAllUsers();
+});
+
+function getAllUsers() {
+    fetch('/allUsers')
+        .then(response => response.json())
+        .then(data => {
+            const usuariosBody = document.getElementById('usuariosBody');
+            if (usuariosBody) {
+                usuariosBody.innerHTML = '';
+
+                data.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${user.id}</td><td>${user.name_u}</td><td>${user.email_u}</td><td><button class="eliminar-btn" onclick="eliminarUsuario(${user.id})">Eliminar</button></td>`;
+                    usuariosBody.appendChild(row);
+                });
+            } else {
+                console.error('Elemento con ID usuariosBody no encontrado en el DOM.');
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener usuarios:', error.message);
+        });
+}
+
+
+
+
+
+
+function eliminarUsuario(id) {
+    if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+        fetch(`/eliminar/${id}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log(`Usuario con ID ${id} eliminado correctamente.`);
+                getAllUsers(); // Actualizar la lista después de eliminar
+            } else {
+                console.error(`Error al intentar eliminar usuario con ID ${id}.`);
+            }
+        })
+        .catch(error => {
+            console.error('Error de red al intentar eliminar usuario:', error.message);
+        });
     }
 }
+
 
 function setUser(user){   
     if (user != null) {      

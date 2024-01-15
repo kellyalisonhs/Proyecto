@@ -94,7 +94,7 @@ body {
   text-align: center;
 }
 
-.eliminar-button{
+.eliminar-btn{
   background-color: #dd7734; /* Color de fondo rojo, puedes ajustar según tus preferencias */
   color: white; /* Color del texto */
   padding: 10px 20px; /* Espaciado interno del botón */
