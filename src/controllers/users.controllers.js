@@ -125,7 +125,6 @@ export const registerUser = async (req, res) => {
       const successMessage = "Usuario registrado con éxito";
       console.log("Usuario registrado con éxito");
       res.render('login', { successMessage });
-
    } catch (error) {
       const errorMessage = "${ error.message }";
       console.log("Error al registrar usuario: ${ error }");
@@ -158,8 +157,8 @@ export const searchUserByEmail = async (req, res) => {
       res.render('changePasswd', { user, successMessage });
    } catch (error) {
       /* res.status(400).send("Error en la búsqueda: ${error.message}"); */
-      const errorMessage = `${ error.message }`;
-      console.log(`Error al registrar usuario: ${ error }`);
+      const errorMessage = '${ error.message }';
+      console.log('Error al registrar usuario: ${ error }');
       res.render('forgotPasswd', { errorMessage });
    }
 };
@@ -180,15 +179,15 @@ export const ActualizarUser = async (req, res) => {
       });
       
       const successMessage = "Usuario actualizado con exito";
-      // Redirige al usuario a la ruta "/login" con un mensaje de éxito
+      // Redirige al usuario a la ruta "users-list" con un mensaje de éxito
       res.json('Usuario Actualizado');
-      res.render("users-list.hbs", { successMessage });
+      res.render('users-list.hbs', { successMessage });
    } catch (error) {
       const errorMessage = "${ error.message }";
       console.log("Error al actualizar usuario: ${ error }");
       res.render('actualizar', { errorMessage });
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
-      res.status(400).send("Error al actualizar el usuario: ${error.message}");
+      res.status(400).send('Error al actualizar el usuario: ${error.message}');
    }
 };
 
