@@ -182,11 +182,10 @@ export const ActualizarUser = async (req, res) => {
       // Redirige al usuario a la ruta "users-list" con un mensaje de éxito
       res.render('usersList', { successMessage });
    } catch (error) {
-      const errorMessage = '${ error.message }';
-      console.log('Error al actualizar usuario: ${ error }');
+      const errorMessage = `${ error.message }`;
+      console.log(`Error al actualizar usuario: ${ error }`);
       res.render('actualizar_usuario', { errorMessage });
       // Manejo de errores: Envía un mensaje de error y un código de estado 400
-      res.status(400).send('Error al actualizar el usuario: ${error.message}');
    }
 };
 
