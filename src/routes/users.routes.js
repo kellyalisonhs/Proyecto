@@ -1,6 +1,6 @@
 /* users.routes.js */
 import { Router } from "express";
-import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar } from "../controllers/users.controllers.js";
+import { getChangePasswd, getForgotPasswd, getLoginForm, getRegisterForm, getAllUsers, registerUser, loginUser, searchUserByEmail, getCatalogue, getMarvelCatalogue, ActualizarUser, eliminar, getActulizar } from "../controllers/users.controllers.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.get("/users-list", getAllUsers);
 
 router.get("/catalogue", getCatalogue); /* buscador de personajes y tarjetas individuales (versión anterior) */
 router.get("/marvel-characters", getMarvelCatalogue); /* ruta con el catálogo y carrito */
-
+router.get("/actualizar", getActulizar) //Formulario para actulizar usuario.
 /* router.get("/login", function(req, res) {
   res.sendFile(__dirname + "/public/login.html");
 }); */
