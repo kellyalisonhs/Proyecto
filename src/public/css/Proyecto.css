@@ -15,11 +15,10 @@ body {
   align-items: center;
   justify-content: center;
   background: #0c0c0c; /* Fondo oscuro para mejorar el contraste */
-  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL._AC_UF894,1000_QL80_.jpg');
+  background-image: url('https://m.media-amazon.com/images/I/81XWjYmdESL.AC_UF894,1000_QL80.jpg');
   background-size: cover;
   background-position: center;
   font-family: 'Bangers', cursive; /* Cambio de tipo de letra a una de estilo de cómic */
-  color: #fff; /* Texto blanco para mayor contraste */
 }
 
 .wrapper {
@@ -94,7 +93,7 @@ select {
 /* Cambios de color para los botones sin transparencia */
 button,
 .form.login input[type="submit"],
-.link-container a, .button-primary {
+.link-container a {
   height: 60px; /* Tamaño del botón aumentado */
   font-size: 18px; /* Tamaño de letra ajustado */
   font-weight: 600; /* Peso de la letra aumentado */
@@ -115,26 +114,14 @@ button,
   display: flex;
   justify-content: space-between; /* Espacio uniforme entre los enlaces */
   gap: 10px;
-  text-align: center;
-  margin-top: 20px;
 }
 
 .link-container a {
   text-decoration: none;
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  display: inline-flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-content: space-around;
 }
 
 .link-container a:hover {
   text-decoration: underline;
-  background-color: #2980b9;
 }
 
 /* Cambio de color al pasar el ratón sobre el botón principal */
@@ -152,8 +139,24 @@ p {
   font-weight: 600;
 }
 
+.btn-delete {
+  height: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  width: 6rem;
+  color: #fff;
+  background: #ed1d24;
+}
+
 .return-link {
   display: block;
   text-align: center;
   margin-top: 20px;
 }
+
+/* .table {
+
+} */

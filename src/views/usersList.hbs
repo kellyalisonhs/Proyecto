@@ -1,35 +1,44 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de usuarios registrados</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="css/styleList.css">
+    <title>Usuarios</title>
+    <link rel="stylesheet" href="css/Proyecto.css">
 </head>
-<body>    
-    <div id="wrapper">
-        <h2 id="titulo">Lista de usuarios registrados</h2>
-        <div class="usuarios-box">
-            <table id="lista">
-                <thead>
-                    <tr>
-                        <th>Usuario</th>        
-                        <th>Correo electronico</th>        
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div> 
+<body>
+  <div class="wrapper">
+  <h1 id="title-table">{{title}}</h1>
+  <table id="usuariosList" class="table">
+    <thead>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Correo</th>
+    </thead>  
+    </tr>
+      {{#each list}}
+    <tr>
+      <td>{{ id }}</td>      
+      <td>{{ name }}</td>
+      <td>{{ email }}</td> 
+      <td>
+      <form action="/users-list/{{id}}" method="POST">
+        <button type="submit" class="btn-delete" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</button>
+      </form>
+      </td>
+    </tr>   
+    {{/each}}
+  </table>
 
-    <script src="../js/lib/md5.min.js"> </script>
-    <script src="../js/tabla.js"></script>
-    <script>
-        getAllUsers();
-    </script>
+    <div class="inicio-link">          
+      <a class="return-link" href="login">Volver a Inicio de Sesión</a>
+    </div>
+  </div>
 
-    <a class="return-link" href="login">Volver al inicio de sesión</a>
-
+  <script>
+    function eliminarUsuario(nombre) {
+      console.log("Eliminar usuario: " + nombre);
+    }
+  </script>
 </body>
 </html>
