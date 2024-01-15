@@ -80,7 +80,7 @@ export const loginUser = async (req, res) => {
    } catch (error) {
       const errorMessage = `Error al iniciar sesión: ${ error.message }`;
       console.log(`Error en el inicio de sesión: ${ error.message }`);
-      res.render('/login', { errorMessage });
+      res.render('login', { errorMessage });
    }
 };
 
@@ -147,9 +147,15 @@ export const searchUserByEmail = async (req, res) => {
 
    try {
       const user = await userService.searchUserByEmail(correo_electronico);
-      res.render("passwdRecovery", { user });
+      /* res.render("passwdRecovery", { user }); */
+      const successMessage = "El correo electrónico existe en nuestra base de datos";
+      console.log("Correo electrónico enecontrado");
+      res.render('changePasswd', { user, successMessage });
    } catch (error) {
-      res.status(400).send("Error en la búsqueda: ${error.message}");
+      /* res.status(400).send("Error en la búsqueda: ${error.message}"); */
+      const errorMessage = `${ error.message }`;
+      console.log(`Error al registrar usuario: ${ error }`);
+      res.render('forgotPasswd', { errorMessage });
    }
 };
 

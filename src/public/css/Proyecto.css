@@ -8,15 +8,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-p {
-  background: whitesmoke;
-  color: #202020;
-  width: 32rem;
-  text-align: center;
-  border-radius: 5px;
-  padding: 1.3rem;
-  font-weight: 600;
-}
+
 body {
   min-height: 100vh;
   display: flex;
@@ -102,7 +94,7 @@ select {
 /* Cambios de color para los botones sin transparencia */
 button,
 .form.login input[type="submit"],
-.link-container a {
+.link-container a, .button-primary {
   height: 60px; /* Tamaño del botón aumentado */
   font-size: 18px; /* Tamaño de letra ajustado */
   font-weight: 600; /* Peso de la letra aumentado */
@@ -123,17 +115,45 @@ button,
   display: flex;
   justify-content: space-between; /* Espacio uniforme entre los enlaces */
   gap: 10px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 .link-container a {
   text-decoration: none;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-content: space-around;
 }
 
 .link-container a:hover {
   text-decoration: underline;
+  background-color: #2980b9;
 }
 
 /* Cambio de color al pasar el ratón sobre el botón principal */
 .button-primary:hover {
   background: #b30000; /* Rojo oscuro al pasar el ratón para mayor contraste */
+}
+
+p {
+  background: whitesmoke;
+  color: #202020;
+  width: 32rem;
+  text-align: center;
+  border-radius: 5px;
+  padding: 1.3rem;
+  font-weight: 600;
+}
+
+.return-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
 }
